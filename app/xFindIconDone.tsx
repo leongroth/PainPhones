@@ -5,7 +5,7 @@ import PainButton from '@/components/reusable/PainButton'
 
 //Done page for FIND_ICON
 
-export const xFindIconDone = () => {
+export default function xFindIconDone  ()  {
   return (
     <View
     style={{

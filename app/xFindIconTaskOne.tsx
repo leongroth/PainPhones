@@ -4,7 +4,7 @@ import Headline from '@/components/reusable/Headline'
 
 //Side 1 af FIND_ICON
 
-export const xFindIconTask1 = () => {
+export default function xFindIconTaskOne() {
   return (
     <View
     style={{
