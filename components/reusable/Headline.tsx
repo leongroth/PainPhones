@@ -2,7 +2,7 @@ import { Text } from "react-native"
 
 const Headline = ({text}) => {
     const style= {
-        fontSize:100,
+        fontSize:50,
         fontFamily:"helvetica",
         margin:10
     }
