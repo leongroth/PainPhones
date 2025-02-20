@@ -1,4 +1,6 @@
 import { View, Text } from "react-native";
+import Headline from "@/components/reusable/Headline";
+
 
 export default function TestScreen() {
   return (
@@ -9,6 +11,7 @@ export default function TestScreen() {
         alignItems: "center",
       }}
     >
+        <Headline text={"Enter your information"}/>
       <Text style={{ fontSize: 20 }}>Welcome to the Test Page!</Text>
     </View>
   );
