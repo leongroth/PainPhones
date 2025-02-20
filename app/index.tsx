@@ -15,6 +15,7 @@ export default function Index() {
       <Headline text={"Hejsa"}/>
       <Description text={"holaholaholaholaholahola"}/>
       <PainButton href={"/ParticipantInfo"} text={"Frost"} />
+      <PainButton href={"/TappingDescription"} text={"TappingTask"} />
     </View>
   );
 }
