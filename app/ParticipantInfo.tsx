@@ -2,8 +2,9 @@ import { View, Text } from "react-native";
 import Headline from "@/components/reusable/Headline";
 import {Dropdown} from 'react-native-element-dropdown'
 import { useState } from "react";
+import Description from "@/components/reusable/Description";
 
-const data= [
+const dataPart= [
   {label: 'Participant 1', value:'1'},
   {label: 'Participant 2', value:'2'},
   {label: 'Participant 3', value:'3'},
@@ -30,22 +31,127 @@ const data= [
   {label: 'Participant 24', value:'24'}
 ]
 
+const dataGender=[
+  {label: 'Man', value:'m'},
+  {label:'Woman', value:'w'}
+]
+
+const dataPain=[
+  {label: 'No pain', value:'0'},
+  {label:'Pain', value:'1'}
+]
+
 const DropdownComponent = () => {
   const [value, setValue] = useState(null);
-}
+
+  return(
+    <Dropdown
+        style={styles.dropdown}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={dataPart}
+        search
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder="Select item"
+        searchPlaceholder="Search..."
+        value={value}
+        onChange={item => {
+          setValue(item.value);
+        }}
+      />
+    );
+  };
+
+  const DropdownComponentGender = () => {
+    const [value, setValue] = useState(null);
+  
+    return(
+      <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={dataGender}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Select gender"
+          searchPlaceholder="Search..."
+          value={value}
+          onChange={item => {
+            setValue(item.value);
+          }}
+        />
+      );
+    };
+
+    const DropdownComponentPain = () => {
+      const [value, setValue] = useState(null);
+    
+      return(
+        <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dataPain}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Select pain or no pain"
+            searchPlaceholder="Search..."
+            value={value}
+            onChange={item => {
+              setValue(item.value);
+            }}
+          />
+        );
+      };
 
 export default function TestScreen() {
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+
     >
-        <Headline text={"Enter your information"}/>
+        <Description text={"Enter your information"}/>
       <Text style={{ fontSize: 20 }}>Welcome to the Test Page!</Text>
-      <DropdownComponent></DropdownComponent>
+      <DropdownComponent/>
+      <DropdownComponentGender/>
+      <DropdownComponentPain/>
     </View>
   );
 }
+
+const styles = {
+  dropdown: {
+    margin: 16,
+    height: 50,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 0.5,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+};
