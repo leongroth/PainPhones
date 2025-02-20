@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import Headline from "@/components/reusable/Headline";
 import {Dropdown} from 'react-native-element-dropdown'
-
+import { useState } from "react";
 
 const data= [
   {label: 'Participant 1', value:'1'},
@@ -30,6 +30,10 @@ const data= [
   {label: 'Participant 24', value:'24'}
 ]
 
+const DropdownComponent = () => {
+  const [value, setValue] = useState(null);
+}
+
 export default function TestScreen() {
   return (
     <View
@@ -41,8 +45,7 @@ export default function TestScreen() {
     >
         <Headline text={"Enter your information"}/>
       <Text style={{ fontSize: 20 }}>Welcome to the Test Page!</Text>
+      <DropdownComponent></DropdownComponent>
     </View>
   );
 }
-
-
