@@ -16,7 +16,6 @@ const TappingDescription = () => {
         <Headline text={"Tapping-Task"}/>
         <Description text={"A circle appears on the screen and you have to press it as quickly and accurately as possible"} />
         <PainButton href={"/TappingTasks"} text={"Continue"} />
-        <Target/>
     </View>
   )
 }

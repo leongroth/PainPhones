@@ -19,8 +19,10 @@ const TappingTasks = () => {
     height: "100%",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   }
+
+
 
   return (
     <View style={columnStyle}>
@@ -64,6 +66,7 @@ const TappingTasks = () => {
       </View>
     </View>
   )
+  
 }
 
 export default TappingTasks
