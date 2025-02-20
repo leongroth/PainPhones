@@ -4,16 +4,16 @@ import { View, StyleSheet } from "react-native"
 const PainButton = ({href , text}) => {
 
     const style = {
-        margin:"20px",
+        margin:"20",
         backgroundColor: "lightgray",
-        padding: "10px",
-        width: "200px",
+        padding: "10",
+        width: "200",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize:"30px",
-        borderRadius: "5px",
-        boxShadow: "1px 2px 7px grey",
+        fontSize:"30",
+        borderRadius: "5",
+        boxShadow: "1 2 7 grey",
     }
 
   return (
