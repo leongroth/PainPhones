@@ -1,10 +1,20 @@
+import Description from "@/components/reusable/Description"
 import Headline from "@/components/reusable/Headline"
-import { View, Text } from "react-native"
+import PainButton from "@/components/reusable/PainButton"
+import { View } from "react-native"
 
 const TappingDescription = () => {
   return (
-    <View>
+    <View
+        style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
         <Headline text={"Tapping-Task"}/>
+        <Description text={"A circle appears on the screen and you have to press it as quickly and accurately as possible"} />
+        <PainButton href={"/TappingTasks"} text={"Continue"} />
     </View>
   )
 }
