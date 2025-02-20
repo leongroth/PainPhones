@@ -16,6 +16,7 @@ export default function Index() {
       <Description text={"holaholaholaholaholahola"}/>
       <PainButton href={"/ParticipantInfo"} text={"Frost"} />
       <PainButton href={"/TappingDescription"} text={"TappingTask"} />
+      <PainButton href={"/xFindIconDescription"} text={"FindIcon"} />
     </View>
   );
 }
