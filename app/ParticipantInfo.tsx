@@ -129,10 +129,11 @@ export default function TestScreen() {
       <DropdownComponentPain/>
 
 
-  <View style={{flexDirection: "row", margin:10, marginLeft: 20, marginRight: 20}}> 
-      <PainButton href={"/ParticipantInfo"} text={"Exit"} />
-      <PainButton href={"/ParticipantInfo"} text={"Save"} />
-  </View>  
+<View style={{flexDirection: "row", margin:5, marginRight: 5, justifyContent: "space-between", alignSelf: "center"}}> 
+  <PainButton href={"/"} text={"Exit"} />
+  <PainButton href={"/"} text={"Save"} />
+</View>  
+
     </View>
 
     
