@@ -3,6 +3,7 @@ import Headline from "@/components/reusable/Headline";
 import {Dropdown} from 'react-native-element-dropdown'
 import { useState } from "react";
 import Description from "@/components/reusable/Description";
+import PainButton from "@/components/reusable/PainButton";
 
 const dataPart= [
   {label: 'Participant 1', value:'1'},
@@ -126,7 +127,15 @@ export default function TestScreen() {
       <DropdownComponent/>
       <DropdownComponentGender/>
       <DropdownComponentPain/>
+
+
+  <View style={{flexDirection: "row", margin:10, marginLeft: 20, marginRight: 20}}> 
+      <PainButton href={"/ParticipantInfo"} text={"Exit"} />
+      <PainButton href={"/ParticipantInfo"} text={"Save"} />
+  </View>  
     </View>
+
+    
   );
 }
 
