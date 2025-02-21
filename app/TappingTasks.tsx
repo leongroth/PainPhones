@@ -1,70 +1,51 @@
 import Target from "@/components/reusable/Target"
-import { View } from "react-native"
+import { useState } from "react"
+import { FlatList, TouchableOpacity, View } from "react-native"
 
 const TappingTasks = () => {
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 24))
+
   const rowHeight = 100 / 6
-
-  const columnStyle = {
-    flexDirection: "column",
-    width: "100%",
-    height: "100%"
-  }
-  const rowStyle = {
-    flexDirection: "row",
-    height: `${rowHeight}%`
-  }
-  const boxStyle = {
-    borderWidth: 4,
-    width: "25%",
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  const styles = {
+    grid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      height: "100%"
+    },
+    box: {
+      width: "25%", 
+      height: `${rowHeight}%`, 
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }
   }
 
+  const boxes = [
+    0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+  ]
 
+  const handlePress = () => {
+    const number = Math.floor(Math.random() * 24)
+    setRandomNumber(number)
+  }
 
   return (
-    <View style={columnStyle}>
-      <View style={rowStyle}>
-        <View style={boxStyle} >1</View>
-        <View style={boxStyle} >2</View>
-        <View style={boxStyle} >3</View>
-        <View style={boxStyle} >4</View>
+    <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
+      <View style={styles.grid}>
+        {boxes.map((item) => {
+          if(item === randomNumber){
+            return (
+              <View style={styles.box}> <Target/> </View>
+            )
+          } else {
+            return (
+              <View style={styles.box}></View>
+            )
+          }
+        })}
       </View>
-      <View style={rowStyle}>
-        <View style={boxStyle} >5</View>
-        <View style={boxStyle} >6</View>
-        <View style={boxStyle} >7</View>
-        <View style={boxStyle} >8</View>
-      </View>
-      <View style={rowStyle}>
-        <View style={boxStyle} >9</View>
-        <View style={boxStyle} >10</View>
-        <View style={boxStyle} >11</View>
-        <View style={boxStyle} >12</View>
-      </View>
-      <View style={rowStyle}>
-        <View style={boxStyle} >13</View>
-        <View style={boxStyle} >
-          <Target />
-        </View>
-        <View style={boxStyle} >15</View>
-        <View style={boxStyle} >16</View>
-      </View>
-      <View style={rowStyle}>
-        <View style={boxStyle} >17</View>
-        <View style={boxStyle} >18</View>
-        <View style={boxStyle} >19</View>
-        <View style={boxStyle} >20</View>
-      </View>
-      <View style={rowStyle}>
-        <View style={boxStyle} >21</View>
-        <View style={boxStyle} >22</View>
-        <View style={boxStyle} >23</View>
-        <View style={boxStyle} >24</View>
-      </View>
-    </View>
+    </TouchableOpacity>
   )
   
 }
