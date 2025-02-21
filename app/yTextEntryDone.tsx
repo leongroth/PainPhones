@@ -3,9 +3,8 @@ import { View, Text } from "react-native";
 import Headline from '@/components/reusable/Headline'
 import PainButton from '@/components/reusable/PainButton'
 
-//Done page for FIND_ICON
 
-export default function xFindIconDone  ()  {
+export default function yTextEntryDone() {
   return (
     <View
         style={{
@@ -14,7 +13,7 @@ export default function xFindIconDone  ()  {
         alignItems: "center",
       }}
     >
-        <Headline text={"2/3"}/>
+        <Headline text={"3/3"}/>
         <Headline text={"Done"}/>
         <PainButton href={"/"} text={"Continue"} />
     </View>
