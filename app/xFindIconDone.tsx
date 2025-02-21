@@ -8,12 +8,15 @@ import PainButton from '@/components/reusable/PainButton'
 export default function xFindIconDone  ()  {
   return (
     <View
-    style={{
-        flex: 1, alignItems: 'center', 
-    }}
-  >
-      <Headline text={"Done"}/>
-    <Text style={{ fontSize: 20 }}>done</Text>
-  </View>
+        style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+        <Headline text={"2/3"}/>
+        <Headline text={"Done"}/>
+        <PainButton href={"/"} text={"Continue"} />
+    </View>
   )
 }
