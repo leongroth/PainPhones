@@ -5,6 +5,8 @@ import Description from '@/components/reusable/Description';
 import PainButton from '@/components/reusable/PainButton';
 import { Image } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { icons } from '@/assets/Icons';
+
 
 
 
@@ -12,34 +14,34 @@ import { TouchableOpacity } from 'react-native';
 
 export default function xFindIconTaskOne() {
 
-  const images=[
-    'assets\Icons\amazon.png', 
-    'assets\Icons\Candy-Crush.jpg',
-    'assets\Icons\chatgpt.jpg',
-    'assets\Icons\ClashOfClans.jpg',
-    'assets\Icons\docs.png',
-    'assets\Icons\dropbox.svg',
-    'assets\Icons\facebook.webp', 
-    'assets\Icons\fruit-ninja.jpg',
-    'assets\Icons\Instagram_logo.webp',
-    'assets\Icons\linkedIn.webp',
-    'assets\Icons\messenger.png',
-    'assets\Icons\Netflix.jpg',
-    'assets\Icons\office365.png',
-    'assets\Icons\onenote.png',
-    'assets\Icons\pokemon-go.png',
-    'assets\Icons\reddit.png',
-    'assets\Icons\Snapchat.png',
-    'assets\Icons\soundcloud.jpg',
-    'assets\Icons\spotify.png',
-    'assets\Icons\strava.png',
-    'assets\Icons\Subway_surfers.jpg',
-    'assets\Icons\whatsapp.jpg',
-    'assets\Icons\Wish-emblem.png',
-    'assets\Icons\youtube.jpg'
+  const images = [
+    icons.amazon,
+    icons.candyCrush,
+    icons.chatgpt,
+    icons.clashOfClans,
+    icons.docs,
+    icons.dropbox,
+    icons.facebook,
+    icons.fruitNinja,
+    icons.instagram,
+    icons.linkedIn,
+    icons.messenger,
+    icons.netflix,
+    icons.office365,
+    icons.onenote,
+    icons.pokemonGo,
+    icons.reddit,
+    icons.snapchat,
+    icons.soundcloud,
+    icons.spotify,
+    icons.strava,
+    icons.subwaySurfers,
+    icons.whatsapp,
+    icons.wishEmblem,
+    icons.youtube,
   ]
 
-    const [imageSrc, setImageSrc]= useState('');
+    const [imageSrc, setImageSrc]= useState(images[0]);
 
     const generateRandomImage = () => {
       const randIndex = 
@@ -69,7 +71,7 @@ export default function xFindIconTaskOne() {
       
     }}
     >
-    <Image source={imageSrc} style={{ width: 100, height: 100 }} /> : <Description text={"Icon"} />
+    <Image source={imageSrc} style={{ width: 100, height: 100 }} /> 
     
     </View>
     <TouchableOpacity onPress={generateRandomImage} style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
