@@ -1,9 +1,11 @@
 import Target from "@/components/reusable/Target"
-import { useState } from "react"
+import { useLayoutEffect, useState, useRef } from "react"
 import { FlatList, TouchableOpacity, View } from "react-native"
 
 const TappingTasks = () => {
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 24))
+ 
+  const targetRef = useRef(null)
 
   const rowHeight = 100 / 6
   const styles = {
@@ -21,6 +23,15 @@ const TappingTasks = () => {
     }
   }
 
+  useLayoutEffect(() => {
+    targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
+      console.log(`x = ${x}, y = ${y}, width = ${width}, height = ${height}, pageX = ${pageX}, pageY = ${pageY}`)
+    }
+    )
+  }, [
+    targetRef
+  ])
+
   const boxes = [
     0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
   ]
@@ -31,13 +42,15 @@ const TappingTasks = () => {
     console.log(`x = ${event.clientX}, y = ${event.clientY}`)
   }
 
+
+
   return (
     <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
       <View style={styles.grid}>
         {boxes.map((item) => {
           if(item === randomNumber){
             return (
-              <View style={styles.box} key={item}> <Target/> </View>
+              <View style={styles.box} key={item} ref={targetRef}> <Target/> </View>
             )
           } else {
             return (
