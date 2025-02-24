@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text } from "react-native";
 import Headline from '@/components/reusable/Headline'
 import Description from '@/components/reusable/Description';
@@ -15,7 +15,7 @@ import { icons } from '@/assets/Icons';
 export default function xFindIconTaskOne() {
 
 
-  const index = (Math.floor(Math.random() * 24));
+  const  [index, setIndex] = useState(Math.floor(Math.random() * 24));
 
   const images = [
     {icon: icons.amazon, id:0, title:"Amazon"},
