@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text } from "react-native";
 import Headline from '@/components/reusable/Headline'
 import Description from '@/components/reusable/Description';
 import PainButton from '@/components/reusable/PainButton';
+
 
 
 //Side 1 af FIND_ICON
@@ -35,6 +36,17 @@ export default function xFindIconTaskOne() {
     'assets\Icons\Wish-emblem.png',
     'assets\Icons\youtube.jpg'
   ]
+
+  const ImageState = () => {
+    const [imageSrc, setImageSrc]= useState('');
+
+    const generateRandomImage = () => {
+      const randIndex = 
+        Math.floor(Math.random() * images.length)
+        setImageSrc(images[randIndex])
+    }
+  }
+
   return (
     <View
     style={{
@@ -57,7 +69,7 @@ export default function xFindIconTaskOne() {
     }}
     >
     <Description text={"Icon"}/>
-
+    {generateRandomImage}
     </View>
 
     <Description text={"Icon name"}/>
