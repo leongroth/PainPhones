@@ -3,6 +3,8 @@ import { View, Text } from "react-native";
 import Headline from '@/components/reusable/Headline'
 import Description from '@/components/reusable/Description';
 import PainButton from '@/components/reusable/PainButton';
+import { Image } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 
 
@@ -37,7 +39,6 @@ export default function xFindIconTaskOne() {
     'assets\Icons\youtube.jpg'
   ]
 
-  const ImageState = () => {
     const [imageSrc, setImageSrc]= useState('');
 
     const generateRandomImage = () => {
@@ -45,7 +46,7 @@ export default function xFindIconTaskOne() {
         Math.floor(Math.random() * images.length)
         setImageSrc(images[randIndex])
     }
-  }
+  
 
   return (
     <View
@@ -56,7 +57,7 @@ export default function xFindIconTaskOne() {
       <Headline text={"Find Icon"}/>
     <Text style={{ fontSize: 20 }}>Find the icon on the display</Text>
     <View
-    style={{
+      style={{
       backgroundColor: '#FEFEFE',
       justifyContent: "center",
       width: 200,
@@ -68,13 +69,16 @@ export default function xFindIconTaskOne() {
       
     }}
     >
-    <Description text={"Icon"}/>
-    {generateRandomImage}
+    <Image source={imageSrc} style={{ width: 100, height: 100 }} /> : <Description text={"Icon"} />
+    
     </View>
-
+    <TouchableOpacity onPress={generateRandomImage} style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
+        <Text style={{ color: 'white' }}>Generate Icon</Text>
+      </TouchableOpacity>
     <Description text={"Icon name"}/>
     <PainButton href={"/xFindIconTaskTwo"} text={"continue"}/>
     
   </View>
   )
 }
+
