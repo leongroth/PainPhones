@@ -14,41 +14,37 @@ import { icons } from '@/assets/Icons';
 
 export default function xFindIconTaskOne() {
 
+
+  const index = (Math.floor(Math.random() * 24));
+
   const images = [
-    icons.amazon,
-    icons.candyCrush,
-    icons.chatgpt,
-    icons.clashOfClans,
-    icons.docs,
-    icons.dropbox,
-    icons.facebook,
-    icons.fruitNinja,
-    icons.instagram,
-    icons.linkedIn,
-    icons.messenger,
-    icons.netflix,
-    icons.office365,
-    icons.onenote,
-    icons.pokemonGo,
-    icons.reddit,
-    icons.snapchat,
-    icons.soundcloud,
-    icons.spotify,
-    icons.strava,
-    icons.subwaySurfers,
-    icons.whatsapp,
-    icons.wishEmblem,
-    icons.youtube,
+    {icon: icons.amazon, id:0, title:"Amazon"},
+    {icon: icons.candyCrush, id:1, title:"Candy Crush"},
+    {icon: icons.chatgpt, id:2 , title:"ChatGPT"},
+    {icon: icons.clashOfClans, id:3 , title:"Clash of Clans"},
+    {icon: icons.docs, id:4 , title:"Docs"},
+    {icon: icons.dropbox, id:5 , title:"Dropbox"},
+    {icon: icons.facebook, id:6 , title:"Facebook"},
+    {icon: icons.fruitNinja, id:7 , title:"Fruit Ninja"},
+    {icon: icons.instagram, id:8 , title:"Instagram"},
+    {icon: icons.linkedIn, id:9 , title:"LinkedIn"},
+    {icon: icons.messenger, id:10 , title:"Messenger"},
+    {icon: icons.netflix, id:11 , title:"Netflix"},
+    {icon: icons.office365, id:12 , title:"Office 365"},
+    {icon: icons.onenote, id:13 , title:"OneNote"},
+    {icon: icons.pokemonGo, id:14 , title:"Pokemon Go"},
+    {icon: icons.reddit, id:15 , title:"Reddit"},
+    {icon: icons.snapchat, id:16 , title:"Snapchat"},
+    {icon: icons.soundcloud, id:17 , title:"Soundcloud"},
+    {icon: icons.spotify, id:18 , title:"Spotify"},
+    {icon: icons.strava, id:19 , title:"Strava"},
+    {icon: icons.subwaySurfers, id:20 , title:"Subway Surfers"},
+    {icon: icons.whatsapp, id:21 , title:"WhatsApp"},
+    {icon: icons.Temu, id:22 , title:"Temu"},
+    {icon: icons.youtube, id:23, title:"Youtube"}
   ]
 
-    const [imageSrc, setImageSrc]= useState(images[0]);
 
-    const generateRandomImage = () => {
-      const randIndex = 
-        Math.floor(Math.random() * images.length)
-        setImageSrc(images[randIndex])
-    }
-  
 
   return (
     <View
@@ -71,13 +67,10 @@ export default function xFindIconTaskOne() {
       
     }}
     >
-    <Image source={imageSrc} style={{ width: 100, height: 100 }} /> 
+    <Image source={images[index].icon} style={{ width: 100, height: 100 }} /> 
     
     </View>
-    <TouchableOpacity onPress={generateRandomImage} style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
-        <Text style={{ color: 'white' }}>Generate Icon</Text>
-      </TouchableOpacity>
-    <Description text={"Icon name"}/>
+    <Description text={images[index].title}/>
     <PainButton href={"/xFindIconTaskTwo"} text={"continue"}/>
     
   </View>
