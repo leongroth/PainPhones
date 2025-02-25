@@ -6,6 +6,7 @@ import PainButton from '../components/reusable/PainButton';
 import { Image } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { icons } from '../assets/Icons';
+import PainButtonTwo from '../components/reusable/PainButtonTwo';
 
 
 
@@ -14,11 +15,15 @@ import { icons } from '../assets/Icons';
 
 export default function xFindIconTaskOne() {
 
-
-  const  index =  Math.floor(Math.random() * 24);
+  const [active, setActive] = useState(false);
+  const [index, setIndex] = useState(0);
+  const generate = () => {
+    setIndex((Math.floor(Math.random() * 24))+1)
+    setActive(true)
+  }
 
   const images = [
-    {icon: icons.amazon, id:0, title:"Amazon"},
+    {icons: "", id:0, title:""},
     {icon: icons.candyCrush, id:1, title:"Candy Crush"},
     {icon: icons.chatgpt, id:2 , title:"ChatGPT"},
     {icon: icons.clashOfClans, id:3 , title:"Clash of Clans"},
@@ -41,7 +46,8 @@ export default function xFindIconTaskOne() {
     {icon: icons.subwaySurfers, id:20 , title:"Subway Surfers"},
     {icon: icons.whatsapp, id:21 , title:"WhatsApp"},
     {icon: icons.Temu, id:22 , title:"Temu"},
-    {icon: icons.youtube, id:23, title:"Youtube"}
+    {icon: icons.youtube, id:23, title:"Youtube"},
+    {icon: icons.amazon, id:24, title:"Amazon"}
   ]
 
 
@@ -72,6 +78,8 @@ export default function xFindIconTaskOne() {
     </View>
     <Description text={images[index].title}/>
     <PainButton href={"/xFindIconTaskTwo"} text={"continue"}/>
+    <PainButtonTwo text={"Generate new image"} onPress={generate} active={active} />
+
     
   </View>
   )
