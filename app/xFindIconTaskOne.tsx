@@ -7,9 +7,7 @@ import { Image } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { icons } from '../assets/Icons';
 import PainButtonTwo from '../components/reusable/PainButtonTwo';
-
-
-
+import * as FileSystem from 'expo-file-system'; 
 
 //Side 1 af FIND_ICON
 
@@ -17,10 +15,14 @@ export default function xFindIconTaskOne() {
 
   const [active, setActive] = useState(false);
   const [index, setIndex] = useState(0);
+
+  // Generate a new random index and return it
   const generate = () => {
-    setIndex((Math.floor(Math.random() * 24))+1)
-    setActive(true)
-  }
+    const newIndex = Math.floor(Math.random() * 24) + 1;
+    setIndex(newIndex);
+    setActive(true);
+    return newIndex; // Return the new index
+  };
 
   const images = [
     {icons: "", id:0, title:""},
@@ -48,40 +50,59 @@ export default function xFindIconTaskOne() {
     {icon: icons.Temu, id:22 , title:"Temu"},
     {icon: icons.youtube, id:23, title:"Youtube"},
     {icon: icons.amazon, id:24, title:"Amazon"}
-  ]
+  ];
 
+  // Logs the genated icon to a csv file
+  const logIcon = async (newIndex) => {
+    const selectedIcon = images[newIndex]; 
+    const logEntry = { iconId: selectedIcon.id };
 
+    const csvData = [
+      ["IconId"], 
+      [logEntry.iconId]
+    ]
+      .map(row => row.join(",")) 
+      .join("\n");
+
+    const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+    await FileSystem.writeAsStringAsync(fileUri, csvData, {
+         encoding: FileSystem.EncodingType.UTF8,
+       });
+     };
+
+  // onPress bruger de begge funktioner på samme tid
+  const GenerateAndLogIcon = () => {
+    const newIndex = generate();
+    logIcon(newIndex);
+  };
 
   return (
     <View
-    style={{
-        flex: 1, alignItems: 'center', 
-    }}
-  >
-      <Headline text={"Find Icon"}/>
-    <Text style={{ fontSize: 20 }}>Find the icon on the display</Text>
-    <View
       style={{
-      backgroundColor: '#FEFEFE',
-      justifyContent: "center",
-      width: 200,
-      height: 200,
-      borderRadius: 10,
-      marginTop: 20,
-      marginBottom: 10,
-      alignItems: 'center', 
-      
-    }}
+        flex: 1, alignItems: 'center', 
+      }}
     >
-    <Image source={images[index].icon} style={{ width: 100, height: 100 }} /> 
-    
+      <Headline text={"Find Icon"}/>
+      <Text style={{ fontSize: 20 }}>Find the icon on the display</Text>
+      
+      <View
+        style={{
+          backgroundColor: '#FEFEFE',
+          justifyContent: "center",
+          width: 200,
+          height: 200,
+          borderRadius: 10,
+          marginTop: 20,
+          marginBottom: 10,
+          alignItems: 'center', 
+        }}
+      >
+        <Image source={images[index].icon} style={{ width: 100, height: 100 }} /> 
+      </View>
+
+      <Description text={images[index].title}/>
+      <PainButton href={"/xFindIconTaskTwo"} text={"continue"}/>
+      <PainButtonTwo text={"Generate new image"} onPress={GenerateAndLogIcon} active={active} />
     </View>
-    <Description text={images[index].title}/>
-    <PainButton href={"/xFindIconTaskTwo"} text={"continue"}/>
-    <PainButtonTwo text={"Generate new image"} onPress={generate} active={active} />
-
-    
-  </View>
-  )
+  );
 }
-
