@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from "react-native";
-import Headline from '@/components/reusable/Headline'
-import Description from '@/components/reusable/Description';
-import PainButton from '@/components/reusable/PainButton';
+import Headline from '../components/reusable/Headline'
+import Description from '../components/reusable/Description';
+import PainButton from '../components/reusable/PainButton';
 import { Image } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { icons } from '@/assets/Icons';
+import { icons } from '../assets/Icons';
 
 
 
@@ -15,7 +15,7 @@ import { icons } from '@/assets/Icons';
 export default function xFindIconTaskOne() {
 
 
-  const  [index, setIndex] = useState(Math.floor(Math.random() * 24));
+  const  index =  Math.floor(Math.random() * 24);
 
   const images = [
     {icon: icons.amazon, id:0, title:"Amazon"},

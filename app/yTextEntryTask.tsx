@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, View, Text } from "react-native";
-import PainButton from "@/components/reusable/PainButton";
+import PainButton from "../components/reusable/PainButton";
 
 const HighlightedTextInput = () => {
   const [isFocused, setIsFocused] = useState(false);

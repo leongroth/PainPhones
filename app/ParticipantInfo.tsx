@@ -1,9 +1,9 @@
 import { View, Text, Alert } from "react-native";
 import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import Description from "@/components/reusable/Description";
-import PainButton from "@/components/reusable/PainButton";
-import PainButtonTwo from "@/components/reusable/PainButtonTwo";
+import Description from "../components/reusable/Description";
+import PainButton from "../components/reusable/PainButton";
+import PainButtonTwo from "../components/reusable/PainButtonTwo";
 import * as FileSystem from "expo-file-system";
 
 const dataPart = [
@@ -147,8 +147,7 @@ export default function ParticipantInfo() {
           alignSelf: "center",
         }}
       >
-        <PainButton href="/" text="Exit" />
-        <PainButtonTwo onPress={saveData} text="Save" />
+        <PainButtonTwo  onPress={saveData} text="Save" />
       </View>
     </View>
   );

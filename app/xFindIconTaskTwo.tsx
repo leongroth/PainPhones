@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import Description from '@/components/reusable/Description'
+import Description from '../components/reusable/Description'
 
 const xFindIconTaskTwo = () => {
 const rowHeight = 100/6

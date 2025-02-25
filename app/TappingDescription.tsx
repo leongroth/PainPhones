@@ -1,7 +1,7 @@
-import Description from "@/components/reusable/Description"
-import Headline from "@/components/reusable/Headline"
-import PainButton from "@/components/reusable/PainButton"
-import Target from "@/components/reusable/Target"
+import Description from "../components/reusable/Description"
+import Headline from "../components/reusable/Headline"
+import PainButton from "../components/reusable/PainButton"
+import Target from "../components/reusable/Target"
 import { View } from "react-native"
 
 const TappingDescription = () => {

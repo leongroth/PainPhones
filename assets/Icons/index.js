@@ -1,31 +1,31 @@
-import amazon from './Prime.svg';
-import candyCrush from './CandyCrush.svg';
-import chatgpt from './ChatGPT.svg';
-import clashOfClans from './ClashOfClans.svg';
-import docs from './GoogleDocs.svg';
-import dropbox from './DropBox.svg';
-import facebook from './Facebook.svg';
-import fruitNinja from './FruitNinja.svg';
-import instagram from './Instagram.svg';
-import linkedIn from './LinkedIn.svg';
-import messenger from './Messenger.svg';
-import netflix from './Netflix.svg';
-import office365 from './Powerpoint.svg';
-import onenote from './Onenote.svg';
-import pokemonGo from './Pokemon-go.svg';
-import reddit from './Reddit.svg';
-import snapchat from './Snapchat.svg';
-import soundcloud from './Soundcloud.svg';
-import spotify from './Spotify.svg';
-import strava from './Strava.svg';
-import subwaySurfers from './Subway-Surfers.svg';
-import whatsapp from './Whatsapp.svg';
-import Temu from './Temu.svg';
-import youtube from './Youtube.svg';
+import amazon from './Prime.png';
+import candyCrush from './CandyCrush.png';
+import chatgpt from './ChatGPT.png';
+import clashOfClans from './ClashOfClans.png';
+import docs from './GoogleDocs.png';
+import dropbox from './DropBox.png';
+import facebook from './Facebook.png';
+import fruitNinja from './FruitNinja.png';
+import instagram from './Instagram.png';
+import linkedIn from './LinkedIn.png';
+import messenger from './Messenger.png';
+import netflix from './Netflix.png';
+import office365 from './Powerpoint.png';
+import onenote from './Onenote.png';
+import pokemonGo from './Pokemon-go.png';
+import reddit from './Reddit.png';
+import snapchat from './Snapchat.png';
+import soundcloud from './Soundcloud.png';
+import spotify from './Spotify.png';
+import strava from './Strava.png';
+import subwaySurfers from './Subway-Surfers.png';
+import whatsapp from './Whatsapp.png';
+import Temu from './Temu.png';
+import youtube from './Youtube.png';
 
 
 export const icons = {
-  amazon,
+    amazon,
     candyCrush,
     chatgpt,
     clashOfClans,

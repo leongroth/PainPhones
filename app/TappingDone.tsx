@@ -1,6 +1,6 @@
 import { View } from 'react-native'
-import Headline from "@/components/reusable/Headline";
-import PainButton from "@/components/reusable/PainButton"
+import Headline from "../components/reusable/Headline";
+import PainButton from "../components/reusable/PainButton"
 
 const TappingDone = () => {
   return (

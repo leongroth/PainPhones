@@ -1,4 +1,4 @@
-import Target from "@/components/reusable/Target"
+import Target from "../components/reusable/Target"
 import { useLayoutEffect, useState, useRef } from "react"
 import { FlatList, TouchableOpacity, View } from "react-native"
 

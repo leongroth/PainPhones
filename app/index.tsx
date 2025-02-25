@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Alert } from "react-native";
-import Description from "@/components/reusable/Description";
-import Headline from "@/components/reusable/Headline";
-import PainButton from "@/components/reusable/PainButton";
-import PainButton2 from "@/components/reusable/PainButtonTwo";
+import Description from "../components/reusable/Description";
+import Headline from "../components/reusable/Headline";
+import PainButton from "../components/reusable/PainButton";
+import PainButtonTwo from "../components/reusable/PainButtonTwo";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 
@@ -28,7 +28,7 @@ export default function Index() {
       <PainButton href={"/TappingDescription"} text={"TappingTask"} />
       <PainButton href={"/xFindIconDescription"} text={"FindIcon"} />
       <PainButton href={"/yTextEntryDescription"} text={"TextEntry"} />
-      <PainButton2 onPress={downloadCSV} text="CSVFile" />
+      <PainButtonTwo onPress={downloadCSV} text="CSVFile" />
     </View>
   );
 }
