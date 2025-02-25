@@ -68,15 +68,21 @@ export default function ParticipantInfo() {
 
     //Convert Data to CSV
     const csvData = [
-      ["Participant", "Gender", "Pain"],
-      ...updatedData.map(Object.values),
+      ["Participant", "Gender", "Pain"],  //Header på csvfilen/Excelarket
+
+    //(map.object.values) tager værdierne fra hvert objekt og konventere dem 
+      ...updatedData.map(Object.values),  // participant: 1, gender: "m", pain: 0 } → ["1", "m", "0"]).
     ]
-      .map((row) => row.join(","))
-      .join("\n");
+
+    //hver komma repræsenter en ny kolonne i CSVfilen/Excelarket og hver \n repræsenter en ny række/linje
+    .map((row) => row.join(",")) //["1", "m", "0"] -> "1,m,0"
+    .join("\n"); //newline så hver row er på en ny linje i CSVfilen/Excelarket
 
     console.log("Generated CSV Data:\n", csvData);
 
+    //Where the file will be saved
     const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+
     await FileSystem.writeAsStringAsync(fileUri, csvData, {
       encoding: FileSystem.EncodingType.UTF8,
     });
