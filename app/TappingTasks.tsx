@@ -83,28 +83,35 @@ const TappingTasks = () => {
     setDate((date) => [...date, newDate])
   }
 
-const LogTime = async (handlePress) => {
-  const logEntry = {startTime: startTime, TimeTaken: timeTaken, PressTime: pressTime }
-  
-  const timeCsvData = [
-    ["TimeTaken", "PressTime"], 
-    [logEntry.startTime, logEntry.TimeTaken, logEntry.PressTime] 
-  ]
-    .map(row => row.join(","))
-    .join("\n");
+  const LogTime = async () => {  
+    const logEntry = {  
+        PressTime: pressTime,  
+        StartTime: startTime,
+        TimeSpent: timeTaken,
+    };  
 
-   const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+    const timeCsvData = [  
+        ["PressTime", "StartTime", "TimeSpent"],
+        [logEntry.PressTime, logEntry.StartTime, logEntry.TimeSpent]  
+    ]  
+    .map(row => row.join(","))  
+    .join("\n");  
 
-    //Tjekker filen eksistere og læser dataen fra filen
-    const fileInfo = await FileSystem.getInfoAsync(fileUri);
-    let existingData = "";
-    if (fileInfo.exists) {
-      existingData = await FileSystem.readAsStringAsync(fileUri);
-    }
+    const fileUri = FileSystem.documentDirectory + "participant_data.csv";  
 
-    //Skriver dataen til filen
-    await FileSystem.writeAsStringAsync(fileUri, existingData + timeCsvData);
-    }; 
+    // Tjekker filen eksisterer og læser dataen  
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);  
+    let existingData = "";  
+    if (fileInfo.exists) {  
+        existingData = await FileSystem.readAsStringAsync(fileUri);  
+    } 
+
+    // Tilføjer det nye data til den eksisterende CSV-fil  
+    const updatedCsvData = existingData ? `${existingData}\n${timeCsvData}` : timeCsvData;  
+
+    await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
+        encoding: FileSystem.EncodingType.UTF8,  
+    });  
 
   return (
     <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
