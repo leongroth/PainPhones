@@ -11,15 +11,25 @@ import { Button, View } from "react-native"
 
 const TappingDescription = () => {
 
-  const date = new Date()
-  // `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`
-  const [time, setTime] = useState([`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`])
+  const startDate = new Date()
+  const [date, setDate] = useState([startDate])
+  const [time, setTime] = useState([`${startDate.getHours()}:${startDate.getMinutes()}:${startDate.getSeconds()}.${startDate.getMilliseconds()}`])
 
-
+  const [timeTaken, setTimeTaken] = useState<Number>()
   const getTime = () => {
     const newDate = new Date()
+    setDate((date) => [...date, newDate])
     const newTime = `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}.${newDate.getMilliseconds()}`
     setTime((time) => [...time, newTime])
+    
+    const pressTime = (newDate.getHours() * 3600000) + (newDate.getMinutes() * 60000) + (newDate.getSeconds() * 1000) + newDate.getMilliseconds()
+    const startTime = (date[date.length - 1].getHours() * 3600000) + (date[date.length - 1].getMinutes() * 60000) + (date[date.length - 1].getSeconds() * 1000) + date[date.length - 1].getMilliseconds()
+    const timeSpent = pressTime - startTime
+    setTimeTaken(timeSpent)
+    console.log(date.length)
+    console.log(`Press time ${pressTime}`)
+    console.log(`Start time ${startTime}`)
+    console.log(timeSpent)
   }
 
   return (
@@ -34,7 +44,6 @@ const TappingDescription = () => {
         <Description text={"A circle appears on the screen and you have to press it as quickly and accurately as possible"} />
         <PainButton href={"/TappingTasks"} text={"Continue"} />
         <PainButtonTwo text={"Get time"} onPress={getTime}/>
-        <View>{time.length}</View>
 
 
     </View>
