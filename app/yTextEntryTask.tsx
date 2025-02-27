@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { TextInput, View, Text } from "react-native";
 import PainButton from "../components/reusable/PainButton";
 import PainButtonTwo from "../components/reusable/PainButtonTwo";
@@ -6,8 +6,7 @@ import PainButtonTwo from "../components/reusable/PainButtonTwo";
 const HighlightedTextInput = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [height, setHeight] = useState(50);
-
-
+  const textInputRef = useRef(null);
 
 
   const easyText= [
@@ -35,23 +34,34 @@ const HighlightedTextInput = () => {
     "Though night doth creep upon the waning day, the fire in my heart shall not grow cold.",
     "The fickle hand of fate may shift the tide, yet still my heart shall hold thee ever near.",
   ]
-  const [order, setOrder] = useState(easyText)
-  const [text, setText] = useState(order[Math.floor(Math.random()*10)])
+  const [order, setOrder] = useState(easyText);
+  const [text, setText] = useState(order[Math.floor(Math.random() * easyText.length)]);
+  const [isEasyText, setIsEasyText] = useState(true);
+  const [input, setInput] = useState("");
+
   const submit = () => {
-    if (order == easyText) {
-      setOrder(hardText)
-      setText(hardText[Math.floor(Math.random()*10)])
+    if (isEasyText) {
+      setOrder(hardText);
+      setText(hardText[Math.floor(Math.random() * hardText.length)]);
+    } else {
+      setOrder(easyText);
+      setText(easyText[Math.floor(Math.random() * easyText.length)]);
+    }
+    setIsEasyText(!isEasyText);
+    textInputRef.current.clear()
+    if (input === text) {
+      alert("Correct!")
     }
     else {
-      setOrder(easyText)
-      setText(easyText[Math.floor(Math.random()*10)])
+      alert("Incorrect!")
     }
-  }
+  };
 
   return (
     <View style={{ padding: 20 }}>
      <Text style={{ fontSize: 20 }}>{text} </Text>
      <TextInput
+        ref={textInputRef}
         style={{
             marginTop: 150,
             height: height,
@@ -66,13 +76,15 @@ const HighlightedTextInput = () => {
         multiline
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onChangeText={newText => setInput(newText)}
       />
       <View style={{ alignItems: 'center', marginTop: 20}} >
       <PainButtonTwo onPress={submit} text={"Submit"}/>
       </View>
     </View>
-  );
-};
+  )
+}
 
 export default HighlightedTextInput;
+
 
