@@ -1,21 +1,22 @@
-import React, { useRef, useState } from "react"
-import { TextInput, View, Text } from "react-native"
-import PainButtonTwo from "../components/reusable/PainButtonTwo"
+import React, { useRef, useState } from "react";
+import { TextInput, View, Text, Alert } from "react-native";
+import PainButtonTwo from "../components/reusable/PainButtonTwo";
+import * as FileSystem from 'expo-file-system';
 
 // Levenshtein distance algorithm
 const levenshteinDistance = (a, b) => {
-  const an = a ? a.length : 0
-  const bn = b ? b.length : 0
-  if (an === 0) return bn
-  if (bn === 0) return an
+  const an = a ? a.length : 0;
+  const bn = b ? b.length : 0;
+  if (an === 0) return bn;
+  if (bn === 0) return an;
   const matrix = Array(an + 1)
     .fill(null)
-    .map(() => Array(bn + 1).fill(null))
+    .map(() => Array(bn + 1).fill(null));
   for (let i = 0; i <= an; i += 1) {
-    matrix[i][0] = i
+    matrix[i][0] = i;
   }
   for (let j = 0; j <= bn; j += 1) {
-    matrix[0][j] = j
+    matrix[0][j] = j;
   }
   for (let i = 1; i <= an; i += 1) {
     for (let j = 1; j <= bn; j += 1) {
@@ -24,16 +25,16 @@ const levenshteinDistance = (a, b) => {
         matrix[i - 1][j] + 1, // deletion
         matrix[i][j - 1] + 1, // insertion
         matrix[i - 1][j - 1] + cost // substitution
-      )
+      );
     }
   }
   return matrix[an][bn];
 };
 
-const HighlightedTextInput = () => {
-  const [isFocused, setIsFocused] = useState(false)
-  const [height, setHeight] = useState(50)
-  const textInputRef = useRef(null)
+const TextEntry = () => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [height, setHeight] = useState(50);
+  const textInputRef = useRef(null);
 
   const easyText = [
     "There is a cat on the big chair.",
@@ -61,29 +62,58 @@ const HighlightedTextInput = () => {
     "The fickle hand of fate may shift the tide, yet still my heart shall hold thee ever near.",
   ];
 
-  const [order, setOrder] = useState(easyText)
-  const [text, setText] = useState(order[Math.floor(Math.random() * easyText.length)])
-  const [isEasyText, setIsEasyText] = useState(true)
-  const [input, setInput] = useState("")
-  const [mistakes, setMistakes] = useState(0)
+  const [order, setOrder] = useState(easyText);
+  const [text, setText] = useState(order[Math.floor(Math.random() * easyText.length)]);
+  const [isEasyText, setIsEasyText] = useState(true);
+  const [input, setInput] = useState("");
+  const [mistakes, setMistakes] = useState(0);
 
-  const submit = () => {
-    const trimmedInput = input.trim()
-    const trimmedText = text.trim()
-    const mistakeCount = levenshteinDistance(trimmedInput, trimmedText)
-    setMistakes(mistakeCount)
+  const submit = async () => {
+    const trimmedInput = input.trim();
+    const trimmedText = text.trim();
+    const mistakeCount = levenshteinDistance(trimmedInput, trimmedText);
+    setMistakes(mistakeCount);
 
-    if (isEasyText) {
-      setOrder(hardText)
-      setText(hardText[Math.floor(Math.random() * hardText.length)])
-    } else {
-      setOrder(easyText)
-      setText(easyText[Math.floor(Math.random() * easyText.length)])
+    const isCorrect = trimmedInput === trimmedText;
+    const result = isCorrect ? "Correct" : "Incorrect";
+
+    const logEntry = { mistakes: mistakeCount, result };
+
+    const csvData = [
+      ["Mistakes", "Result"],
+      [logEntry.mistakes, logEntry.result]
+    ]
+      .map(row => row.join(","))
+      .join("\n");
+
+    const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+
+    // Check if the file exists and read the data from the file
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);
+    let existingData = "";
+    if (fileInfo.exists) {
+      existingData = await FileSystem.readAsStringAsync(fileUri);
     }
 
-    setIsEasyText(!isEasyText)
-    textInputRef.current.clear()
-    setInput("")
+    // Append the new data to the existing data in the CSV file
+    const updatedCsvData = existingData ? `${existingData}\n${csvData}` : csvData;
+
+    await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+
+    if (isEasyText) {
+      setOrder(hardText);
+      setText(hardText[Math.floor(Math.random() * hardText.length)]);
+    } else {
+      setOrder(easyText);
+      setText(easyText[Math.floor(Math.random() * easyText.length)]);
+    }
+
+    setIsEasyText(!isEasyText);
+    textInputRef.current.clear();
+    setInput("");
+    Alert.alert(result);
   };
 
   return (
@@ -116,4 +146,4 @@ const HighlightedTextInput = () => {
   );
 };
 
-export default HighlightedTextInput
+export default TextEntry;
