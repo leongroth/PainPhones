@@ -33,11 +33,14 @@ const TappingTasks = () => {
     const number = Math.floor(Math.random() * 24)
     setRandomNumber(number)
     const touchCoordinates = `x = ${event.clientX}, y = ${event.clientY}`
+    const xInput = event.clientX
+    const yInput = event.clientY
     //console.log(`x = ${event.clientX}, y = ${event.clientY}`)
     targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
       //console.log(`x = ${x}, y = ${y}, width = ${width}, height = ${height}, pageX = ${pageX}, pageY = ${pageY}`)
       const targetCoordinates = `TargetX = ${pageX + (width / 2)} TargetY = ${pageY + (height / 2)}`
-      console.log(`${touchCoordinates} ---> ${targetCoordinates}`)
+      const ErrorDistance = `${(pageX + (width / 2)) - xInput} Y: ${(pageY + (height / 2)) - yInput}`
+      console.log(`${touchCoordinates} ---> ${targetCoordinates} ==== Distance from target: X: ${ErrorDistance}`)
     }
     )
   }
