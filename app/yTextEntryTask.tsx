@@ -1,15 +1,41 @@
-import React, { useRef, useState } from "react";
-import { TextInput, View, Text } from "react-native";
-import PainButton from "../components/reusable/PainButton";
-import PainButtonTwo from "../components/reusable/PainButtonTwo";
+import React, { useRef, useState } from "react"
+import { TextInput, View, Text } from "react-native"
+import PainButtonTwo from "../components/reusable/PainButtonTwo"
+
+// Levenshtein distance algorithm
+const levenshteinDistance = (a, b) => {
+  const an = a ? a.length : 0
+  const bn = b ? b.length : 0
+  if (an === 0) return bn
+  if (bn === 0) return an
+  const matrix = Array(an + 1)
+    .fill(null)
+    .map(() => Array(bn + 1).fill(null))
+  for (let i = 0; i <= an; i += 1) {
+    matrix[i][0] = i
+  }
+  for (let j = 0; j <= bn; j += 1) {
+    matrix[0][j] = j
+  }
+  for (let i = 1; i <= an; i += 1) {
+    for (let j = 1; j <= bn; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1, // deletion
+        matrix[i][j - 1] + 1, // insertion
+        matrix[i - 1][j - 1] + cost // substitution
+      )
+    }
+  }
+  return matrix[an][bn];
+};
 
 const HighlightedTextInput = () => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [height, setHeight] = useState(50);
-  const textInputRef = useRef(null);
+  const [isFocused, setIsFocused] = useState(false)
+  const [height, setHeight] = useState(50)
+  const textInputRef = useRef(null)
 
-
-  const easyText= [
+  const easyText = [
     "There is a cat on the big chair.",
     "A dog runs in the yard with us.",
     "The sun is hot in the blue sky.",
@@ -20,9 +46,9 @@ const HighlightedTextInput = () => {
     "There is a bee in the red rose.",
     "The bell rings in the quiet hall.",
     "A frog jumps in the wet grass.",
-  ]
+  ];
 
-  const hardText= [
+  const hardText = [
     "Let not the winds of fate erase my name. My soul shall in thy heart forever stay.",
     "Though time may steal the youth from out my face, my love within thy gaze shall never pale.",
     "Yet shall the moonlight grace the silent shore, though waves may rise and crash against the stone.",
@@ -33,58 +59,61 @@ const HighlightedTextInput = () => {
     "Time bends its will to neither king nor slave, yet love shall carve its name upon the stone.",
     "Though night doth creep upon the waning day, the fire in my heart shall not grow cold.",
     "The fickle hand of fate may shift the tide, yet still my heart shall hold thee ever near.",
-  ]
-  const [order, setOrder] = useState(easyText);
-  const [text, setText] = useState(order[Math.floor(Math.random() * easyText.length)]);
-  const [isEasyText, setIsEasyText] = useState(true);
-  const [input, setInput] = useState("");
+  ];
+
+  const [order, setOrder] = useState(easyText)
+  const [text, setText] = useState(order[Math.floor(Math.random() * easyText.length)])
+  const [isEasyText, setIsEasyText] = useState(true)
+  const [input, setInput] = useState("")
+  const [mistakes, setMistakes] = useState(0)
 
   const submit = () => {
+    const trimmedInput = input.trim()
+    const trimmedText = text.trim()
+    const mistakeCount = levenshteinDistance(trimmedInput, trimmedText)
+    setMistakes(mistakeCount)
+
     if (isEasyText) {
-      setOrder(hardText);
-      setText(hardText[Math.floor(Math.random() * hardText.length)]);
+      setOrder(hardText)
+      setText(hardText[Math.floor(Math.random() * hardText.length)])
     } else {
-      setOrder(easyText);
-      setText(easyText[Math.floor(Math.random() * easyText.length)]);
+      setOrder(easyText)
+      setText(easyText[Math.floor(Math.random() * easyText.length)])
     }
-    setIsEasyText(!isEasyText);
+
+    setIsEasyText(!isEasyText)
     textInputRef.current.clear()
-    if (input === text) {
-      alert("Correct!")
-    }
-    else {
-      alert("Incorrect!")
-    }
+    setInput("")
   };
 
   return (
     <View style={{ padding: 20 }}>
-     <Text style={{ fontSize: 20 }}>{text} </Text>
-     <TextInput
+      <Text style={{ fontSize: 20 }}>{text} </Text>
+      <TextInput
         ref={textInputRef}
         style={{
-            marginTop: 150,
-            height: height,
-            minHeight: 100,
-            borderWidth: 2,
-            borderColor: isFocused ? "#007AFF" : "#ccc",
-            borderRadius: 8,
-            paddingHorizontal: 10,
-            backgroundColor: isFocused ? "#E6F0FF" : "white",
+          marginTop: 150,
+          height: height,
+          minHeight: 100,
+          borderWidth: 2,
+          borderColor: isFocused ? "#007AFF" : "#ccc",
+          borderRadius: 8,
+          paddingHorizontal: 10,
+          backgroundColor: isFocused ? "#E6F0FF" : "white",
         }}
         placeholder="Type here..."
         multiline
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onChangeText={newText => setInput(newText)}
+        onChangeText={setInput}
+        value={input}
       />
-      <View style={{ alignItems: 'center', marginTop: 20}} >
-      <PainButtonTwo onPress={submit} text={"Submit"}/>
+      <Text style={{ marginTop: 10 }}>Mistakes: {mistakes}</Text>
+      <View style={{ alignItems: 'center', marginTop: 20 }}>
+        <PainButtonTwo onPress={submit} text={"Submit"} />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default HighlightedTextInput;
-
-
+export default HighlightedTextInput
