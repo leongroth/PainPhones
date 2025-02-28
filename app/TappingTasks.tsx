@@ -44,12 +44,6 @@ const TappingTasks = () => {
 
   const handlePress = (event) => {
 
-  // Log number of presses
-  numberOfPresses += 1
-  if(numberOfPresses === goalNumberOfPresses){
-    console.log("Done")
-  }
-
     // New random number
     const number = Math.floor(Math.random() * 24)
     setRandomNumber(number)
@@ -111,7 +105,8 @@ const TappingTasks = () => {
 
     await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
         encoding: FileSystem.EncodingType.UTF8,  
-    });  
+      });  
+    }
 
   return (
     <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
