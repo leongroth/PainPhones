@@ -105,13 +105,13 @@ const TappingTasks = () => {
       setData((data) => [...data, {
         time: `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}.${newDate.getMilliseconds()}`, 
         timespent: timeSpent, 
-        touchX: xInput, 
-        touchY: yInput, 
-        targetX: (pageX + (width / 2)), 
-        tagetY: (pageY + (height / 2)), 
+        touchX: xInput.toString(), 
+        touchY: yInput.toString(), 
+        targetX: (pageX + (width / 2)).toString(), 
+        tagetY: (pageY + (height / 2)).toString(), 
         distance: ErrorDistance, 
         hit: hit,
-        targetID: numberOfPresses
+        targetID: numberOfPresses.toString()
       }])
     }
     )
