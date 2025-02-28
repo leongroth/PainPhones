@@ -2,6 +2,7 @@ import Target from "../components/reusable/Target"
 import { useLayoutEffect, useState, useRef } from "react"
 import { FlatList, TouchableOpacity, View } from "react-native"
 import * as FileSystem from 'expo-file-system'
+import PainButton from "../components/reusable/PainButton"
 
 const TappingTasks = () => {
 
@@ -15,7 +16,10 @@ const TappingTasks = () => {
 
   // Antal gange der skal trykkes
   const goalNumberOfPresses = 10
+  const [numberOfPresses, setNumberOfPresses] = useState(0)
 
+
+  // Random number
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 24))
  
   const targetRef = useRef(null)
@@ -33,6 +37,13 @@ const TappingTasks = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center"
+    },
+    end: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
     }
   }
 
@@ -44,6 +55,14 @@ const TappingTasks = () => {
 
   const handlePress = (event) => {
 
+    const newNumberofPresses = numberOfPresses + 1
+    setNumberOfPresses(newNumberofPresses)
+    console.log(newNumberofPresses)
+    
+
+    if(numberOfPresses === goalNumberOfPresses){
+      console.log("done")
+    }
 
     // New random number
     const number = Math.floor(Math.random() * 24)
@@ -109,23 +128,38 @@ const TappingTasks = () => {
       });  
     }
 
-  return (
-    <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
-      <View style={styles.grid}>
-        {boxes.map((item) => {
-          if(item === randomNumber){
-            return (
-              <View style={styles.box} key={item} ref={targetRef}> <Target/> </View>
-            )
-          } else {
-            return (
-              <View style={styles.box} key={item}></View>
-            )
-          }
-        })}
-      </View>
-    </TouchableOpacity>
-  )
+    
+
+    if(numberOfPresses < goalNumberOfPresses){
+      return (
+        <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
+          <View style={styles.grid}>
+            {
+                boxes.map((item) => {
+                  if(item === randomNumber){
+                    return (
+                      <View style={styles.box} key={item} ref={targetRef}> <Target/> </View>
+                    )
+                  } else {
+                    return (
+                      <View style={styles.box} key={item}></View>
+                    )
+                  }
+                })
+              }
+          </View>
+        </TouchableOpacity>
+      )
+    } else {
+      return (
+        <View style={styles.end}>
+          <TouchableOpacity onPress={LogTime}>
+            <PainButton href={"/TappingDone"} text={"Continue"} />
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  
   
 }
 

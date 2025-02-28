@@ -4,7 +4,7 @@ import Headline from "../components/reusable/Headline"
 import PainButton from "../components/reusable/PainButton"
 import PainButtonTwo from "../components/reusable/PainButtonTwo"
 import Target from "../components/reusable/Target"
-import { Button, View } from "react-native"
+import { Button, TouchableOpacity, View } from "react-native"
 
 
 
@@ -21,7 +21,11 @@ const TappingDescription = () => {
     >
         <Headline text={"Tapping-Task"}/>
         <Description text={"A circle appears on the screen and you have to press it as quickly and accurately as possible"} />
-        <PainButton href={"/TappingTasks"} text={"Continue"} />
+
+        <TouchableOpacity onPress={() => {console.log("pressed")}}>
+          <PainButton href={"/TappingTasks"} text={"Continue"} />
+        </TouchableOpacity>
+        
 
     </View>
   )
