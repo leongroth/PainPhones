@@ -106,7 +106,8 @@ const TappingTasks = () => {
 
     await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
         encoding: FileSystem.EncodingType.UTF8,  
-    });  
+      });  
+    }
 
   return (
     <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
