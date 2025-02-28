@@ -118,39 +118,41 @@ const TappingTasks = () => {
     console.log(data)
   }
 
-  const LogTime = async () => {  
- const fileUri = FileSystem.documentDirectory + "participant_data.csv";  
-
-   // Tjekker filen eksisterer og læser dataen  
-   const fileInfo = await FileSystem.getInfoAsync(fileUri);  
-   let existingData = "";  
-   if (fileInfo.exists) {  
-       existingData = await FileSystem.readAsStringAsync(fileUri);  
-   } 
-
-    data.map((item) => {
-        const timeCsvData = [
-          ["PressTime", "TimeSpent", 
-          "TouchX", "TouchY", "TargetX", "TargetY", 
-          "Distance", "Hit", "TargetID"],
-          [ item.time, item.timespent, item.touchX, item.touchY, 
-          item.targetX, item.tagetY, item.distance, item.hit,
-          item.targetID]
-        ].map(row => row.join(","))  
-      .join("\n"); 
-
-      const updatedCsvData = existingData ? `${existingData}\n${timeCsvData}` : timeCsvData;
-
-      
-        FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
-        encoding: FileSystem.EncodingType.UTF8, 
-
-      } 
-      
-      )
-    })   
-     
+  const LogTime = async () => {
+    const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+  
+    // Check if the file exists and read the existing data
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);
+    let existingData = "";
+    if (fileInfo.exists) {
+      existingData = await FileSystem.readAsStringAsync(fileUri);
     }
+  
+    // Create CSV data for all entries
+    const timeCsvData = [
+      ["PressTime", "TimeSpent", "TouchX", "TouchY", "TargetX", "TargetY", "Distance", "Hit", "TargetID"],
+      ...data.map((item) => [
+        item.time,
+        item.timespent,
+        item.touchX,
+        item.touchY,
+        item.targetX,
+        item.tagetY,
+        item.distance,
+        item.hit,
+        item.targetID,
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+  
+    const updatedCsvData = existingData ? `${existingData}\n${timeCsvData}` : timeCsvData;
+  
+    // Write the updated CSV content to the file
+    await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+  };
 
     
 
