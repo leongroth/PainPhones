@@ -119,35 +119,37 @@ const TappingTasks = () => {
   }
 
   const LogTime = async () => {  
-    const logEntry = {  
-        PressTime: pressTime,  
-        StartTime: startTime,
-        TimeSpent: timeTaken,
+ const fileUri = FileSystem.documentDirectory + "participant_data.csv";  
 
-    };  
+   // Tjekker filen eksisterer og læser dataen  
+   const fileInfo = await FileSystem.getInfoAsync(fileUri);  
+   let existingData = "";  
+   if (fileInfo.exists) {  
+       existingData = await FileSystem.readAsStringAsync(fileUri);  
+   } 
 
-    const timeCsvData = [  
-        ["PressTime", "StartTime", "TimeSpent"],
-        [logEntry.PressTime, logEntry.StartTime, logEntry.TimeSpent]  
-    ]  
-    .map(row => row.join(","))  
-    .join("\n");  
+    data.map((item) => {
+        const timeCsvData = [
+          ["PressTime", "TimeSpent", 
+          "TouchX", "TouchY", "TargetX", "TargetY", 
+          "Distance", "Hit", "TargetID"],
+          [ item.time, item.timespent, item.touchX, item.touchY, 
+          item.targetX, item.tagetY, item.distance, item.hit,
+          item.targetID]
+        ].map(row => row.join(","))  
+      .join("\n"); 
 
-    const fileUri = FileSystem.documentDirectory + "participant_data.csv";  
+      const updatedCsvData = existingData ? `${existingData}\n${timeCsvData}` : timeCsvData;
 
-    // Tjekker filen eksisterer og læser dataen  
-    const fileInfo = await FileSystem.getInfoAsync(fileUri);  
-    let existingData = "";  
-    if (fileInfo.exists) {  
-        existingData = await FileSystem.readAsStringAsync(fileUri);  
-    } 
+      
+        FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
+        encoding: FileSystem.EncodingType.UTF8, 
 
-    // Tilføjer det nye data til den eksisterende CSV-fil  
-    const updatedCsvData = existingData ? `${existingData}\n${timeCsvData}` : timeCsvData;  
-
-    await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {  
-        encoding: FileSystem.EncodingType.UTF8,  
-      });  
+      } 
+      
+      )
+    })   
+     
     }
 
     
