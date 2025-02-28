@@ -3,6 +3,7 @@ import { useLayoutEffect, useState, useRef } from "react"
 import { FlatList, TouchableOpacity, View } from "react-native"
 import * as FileSystem from 'expo-file-system'
 import PainButton from "../components/reusable/PainButton"
+import PainButtonTwo from "../components/reusable/PainButtonTwo"
 
 const TappingTasks = () => {
 
@@ -83,14 +84,14 @@ const TappingTasks = () => {
     const newDate = new Date()
     setPressTime((pressTime) => [...pressTime, `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}.${newDate.getMilliseconds()}`])
 
-    const pressTime = (newDate.getHours() * 3600000) + (newDate.getMinutes() * 60000) + (newDate.getSeconds() * 1000) + newDate.getMilliseconds()
-    const startTime = (date[date.length - 1].getHours() * 3600000) + (date[date.length - 1].getMinutes() * 60000) + (date[date.length - 1].getSeconds() * 1000) + date[date.length - 1].getMilliseconds()
-    const timeSpent = pressTime - startTime
+    const pressedTime = (newDate.getHours() * 3600000) + (newDate.getMinutes() * 60000) + (newDate.getSeconds() * 1000) + newDate.getMilliseconds()
+    const previousTime = (date[date.length - 1].getHours() * 3600000) + (date[date.length - 1].getMinutes() * 60000) + (date[date.length - 1].getSeconds() * 1000) + date[date.length - 1].getMilliseconds()
+    const timeSpent = pressedTime - previousTime
 
 
     // Debugging
-    console.log(`Press time ${pressTime}`)
-    console.log(`Start time ${startTime}`)
+    console.log(`Press time ${pressedTime}`)
+    console.log(`Start time ${previousTime}`)
     console.log(timeSpent)
 
     setTimeTaken((timeTaken) => [...timeTaken, timeSpent])
@@ -102,6 +103,7 @@ const TappingTasks = () => {
         PressTime: pressTime,  
         StartTime: startTime,
         TimeSpent: timeTaken,
+        
     };  
 
     const timeCsvData = [  
@@ -153,9 +155,9 @@ const TappingTasks = () => {
     } else {
       return (
         <View style={styles.end}>
-          <TouchableOpacity onPress={LogTime}>
-            <PainButton href={"/TappingDone"} text={"Continue"} />
-          </TouchableOpacity>
+          <PainButtonTwo onPress={LogTime} text={"Log"} />
+          <PainButton href={"/TappingDone"} text={"Continue"} />
+          
         </View>
       )
     }
