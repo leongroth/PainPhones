@@ -90,13 +90,17 @@ const TappingTasks = () => {
 
     // Log coordinates
     const touchCoordinates = `x = ${event.clientX}, y = ${event.clientY}`
-    const xInput = event.nativeEvent.locationX
-    const yInput = event.nativeEvent.locationY
+    const xInput = event.nativeEvent.pageX
+    const yInput = event.nativeEvent.pageY
     targetRef.current?.measure((width, height, pageX, pageY) => {
       const targetCoordinates = `TargetX = ${pageX + (width / 2)} TargetY = ${pageY + (height / 2)}`
       const ErrorDistance = `X: ${(pageX + (width / 2)) - xInput} Y: ${(pageY + (height / 2)) - yInput}`
       console.log(`${touchCoordinates} ---> ${targetCoordinates} ==== Distance from target: X: ${ErrorDistance}`)
       let hit = ""
+
+      console.log(`X: ${xInput}`)
+      console.log(`Y: ${yInput}`)
+
       if(((pageX + (width / 2)) - xInput) < 68 && ((pageY + (height / 2)) - yInput) < 68){
         hit = "Hit"
       } else {
@@ -158,7 +162,7 @@ const TappingTasks = () => {
 
     if(numberOfPresses < goalNumberOfPresses){
       return (
-        <TouchableOpacity style={{ height: "100%", width: "100%"}} onPress={handlePress}>
+        <TouchableOpacity style={{ height: "100%", width: "100%", backgroundColor: "red",}} onPress={(evt) => handlePress(evt)}>
           <View style={styles.grid}>
             {
                 boxes.map((item) => {
