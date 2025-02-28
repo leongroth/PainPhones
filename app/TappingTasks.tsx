@@ -14,6 +14,8 @@ const TappingTasks = () => {
   const [timeTaken, setTimeTaken] = useState([])
   const [date, setDate] = useState([startDate])
 
+  const [data, setData] = useState([])
+
 
   // Antal gange der skal trykkes
   const goalNumberOfPresses = 10
@@ -69,17 +71,6 @@ const TappingTasks = () => {
     const number = Math.floor(Math.random() * 24)
     setRandomNumber(number)
 
-    // Log coordinates
-    const touchCoordinates = `x = ${event.clientX}, y = ${event.clientY}`
-    const xInput = event.clientX
-    const yInput = event.clientY
-    targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
-      const targetCoordinates = `TargetX = ${pageX + (width / 2)} TargetY = ${pageY + (height / 2)}`
-      const ErrorDistance = `${(pageX + (width / 2)) - xInput} Y: ${(pageY + (height / 2)) - yInput}`
-      console.log(`${touchCoordinates} ---> ${targetCoordinates} ==== Distance from target: X: ${ErrorDistance}`)
-    }
-    )
-
     // Log time
     const newDate = new Date()
     setPressTime((pressTime) => [...pressTime, `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}.${newDate.getMilliseconds()}`])
@@ -96,6 +87,35 @@ const TappingTasks = () => {
 
     setTimeTaken((timeTaken) => [...timeTaken, timeSpent])
     setDate((date) => [...date, newDate])
+
+    // Log coordinates
+    const touchCoordinates = `x = ${event.clientX}, y = ${event.clientY}`
+    const xInput = event.clientX
+    const yInput = event.clientY
+    targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
+      const targetCoordinates = `TargetX = ${pageX + (width / 2)} TargetY = ${pageY + (height / 2)}`
+      const ErrorDistance = `X: ${(pageX + (width / 2)) - xInput} Y: ${(pageY + (height / 2)) - yInput}`
+      console.log(`${touchCoordinates} ---> ${targetCoordinates} ==== Distance from target: X: ${ErrorDistance}`)
+      let hit = ""
+      if(((pageX + (width / 2)) - xInput) < 68 && ((pageY + (height / 2)) - yInput) < 68){
+        hit = "Hit"
+      } else {
+        hit = "Miss"
+      }
+      setData((data) => [...data, {
+        time: `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}.${newDate.getMilliseconds()}`, 
+        timespent: timeSpent, 
+        touchX: xInput, 
+        touchY: yInput, 
+        targetX: (pageX + (width / 2)), 
+        tagetY: (pageY + (height / 2)), 
+        distance: ErrorDistance, 
+        hit: hit,
+        targetID: numberOfPresses
+      }])
+    }
+    )
+    console.log(data)
   }
 
   const LogTime = async () => {  
@@ -103,7 +123,7 @@ const TappingTasks = () => {
         PressTime: pressTime,  
         StartTime: startTime,
         TimeSpent: timeTaken,
-        
+
     };  
 
     const timeCsvData = [  
