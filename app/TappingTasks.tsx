@@ -90,9 +90,9 @@ const TappingTasks = () => {
 
     // Log coordinates
     const touchCoordinates = `x = ${event.clientX}, y = ${event.clientY}`
-    const xInput = event.clientX
-    const yInput = event.clientY
-    targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
+    const xInput = event.nativeEvent.locationX
+    const yInput = event.nativeEvent.locationY
+    targetRef.current?.measure((width, height, pageX, pageY) => {
       const targetCoordinates = `TargetX = ${pageX + (width / 2)} TargetY = ${pageY + (height / 2)}`
       const ErrorDistance = `X: ${(pageX + (width / 2)) - xInput} Y: ${(pageY + (height / 2)) - yInput}`
       console.log(`${touchCoordinates} ---> ${targetCoordinates} ==== Distance from target: X: ${ErrorDistance}`)
