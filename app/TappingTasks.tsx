@@ -44,11 +44,6 @@ const TappingTasks = () => {
 
   const handlePress = (event) => {
 
-  // Log number of presses
-  numberOfPresses += 1
-  if(numberOfPresses === goalNumberOfPresses){
-    console.log("Done")
-  }
 
     // New random number
     const number = Math.floor(Math.random() * 24)
