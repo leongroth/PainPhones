@@ -2,8 +2,8 @@ import { View } from 'react-native'
 
 const Target = () => {
     const OuterTarget = {
-        width: 135,
-        height: 135,
+        width: 70,
+        height: 70,
         borderRadius: 100,
         borderWidth: 3,
         borderColor: "blue",

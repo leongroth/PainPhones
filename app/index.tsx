@@ -28,6 +28,7 @@ export default function Index() {
       <PainButton href={"/TappingDescription"} text={"TappingTask"} />
       <PainButton href={"/xFindIconDescription"} text={"FindIcon"} />
       <PainButton href={"/yTextEntryDescription"} text={"TextEntry"} />
+      <PainButton href={"/Test"} text={"test"} />
       <PainButtonTwo onPress={downloadCSV} text="CSVFile" />
     </View>
   );

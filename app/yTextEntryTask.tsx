@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { TextInput, View, Text, Alert } from "react-native";
 import PainButtonTwo from "../components/reusable/PainButtonTwo";
 import * as FileSystem from 'expo-file-system';
+import { useNavigation } from "@react-navigation/native";
 
 // Levenshtein distance algorithm
 const levenshteinDistance = (a, b) => {
@@ -32,6 +33,25 @@ const levenshteinDistance = (a, b) => {
 };
 
 const TextEntry = () => {
+  const timeLimit = 5
+  const [time, setTime] = useState(0)
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prevTime => {
+        if (prevTime >= timeLimit) {
+          clearInterval(interval)
+          navigation.navigate('yTextEntryDone') // Replace 'NextPage' with the name of your next screen
+          return prevTime
+        }
+        return prevTime + 1
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [navigation])
+
   const [isFocused, setIsFocused] = useState(false)
   const [height, setHeight] = useState(50)
   const textInputRef = useRef(null)
