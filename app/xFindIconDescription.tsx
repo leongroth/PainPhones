@@ -14,7 +14,7 @@ export default function xFindIconDescription() {
   >
       <Headline text={"Find Icon"}/>
     <Text style={{ fontSize: 20 }}>A icon is shown to you and you have to find it with other icons in the mix </Text>
-    <PainButton href={"/xFindIconTaskOne"} text={"continue"}/>
+    <PainButton href={"/xFindIconTask"} text={"continue"}/>
     <PainButton href={"/xFindIconDone"} text={"task done"} />
   </View>
   )
