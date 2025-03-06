@@ -8,14 +8,37 @@ import { TouchableOpacity } from 'react-native';
 import { icons } from '../assets/Icons';
 import PainButtonTwo from '../components/reusable/PainButtonTwo';
 import * as FileSystem from 'expo-file-system';
+import arrayShuffle from 'array-shuffle';
+import 
+
 
 
 const xFindIconTask = () => {
+
   const [index, setIndex] = useState(Math.floor(Math.random() * 24));
-  const [pageState, setPageState] = useState(true);
+  const [pageState, setPageState] = useState("Memory");
+
+  // Timer funktion
+const timeLimit = 5
+const [time, setTime] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prevTime => {
+        if (prevTime >= timeLimit) {
+            clearInterval(interval)
+            setPageState("Done");
+            return prevTime
+        }
+        return prevTime + 1
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
 
-  const images = [
+  const imageArray = [
     { icon: icons.amazon, id: 0, title: "Amazon" },
     { icon: icons.candyCrush, id: 1, title: "Candy Crush" },
     { icon: icons.chatgpt, id: 2, title: "ChatGPT" },
@@ -42,12 +65,18 @@ const xFindIconTask = () => {
     { icon: icons.youtube, id: 23, title: "Youtube" },
   ];
 
-  const rowHeight = 100 / 6
+  const [images, setImages] = useState(arrayShuffle(imageArray));
+  const [iconID, setIconID] = useState(images[index].id);
+
+
+
+const rowHeight = 100 / 6
 const style= {
     pageStyle: {
         flex: 1,
         alignItems: "center",
-        marginTop: 50,
+        justifyContent: "center",
+
 },
     iconStyle: {
         backgroundColor: '#FEFEFE',
@@ -95,16 +124,21 @@ const style= {
     }
 }
 
+
 const correctPress = () => {
     console.log("Correct");
-    setPageState(true);
-    setIndex(Math.floor(Math.random() * 24))
+    const newIndex = Math.floor(Math.random() * 24);
+    setPageState("Memory");
+    setIndex(newIndex);
+    const shuffledImages = arrayShuffle(imageArray);
+    setImages(shuffledImages);
+    setIconID(shuffledImages[newIndex].id);
 }
 const wrongPress = () => {
     console.log("Wrong");
 }
 
-if (pageState) {
+if (pageState === "Memory") {
     return (
       <View style= {style.pageStyle}>
         <Headline text={"Find Icon"} />
@@ -115,17 +149,17 @@ if (pageState) {
         </View>
         <Description text={images[index].title} />
       <PainButtonTwo text={"continue" } onPress={() => {
-            setPageState(false);
+            setPageState("Task");
       }} />
       </View>
       
     )
 }
-else {
+if(pageState === "Task"){ {
     return (
         <View style={style.gridStyle}>
             {images.map((image) => {
-                if(image.id === index){
+                if(image.id === iconID){
                     return (
                         <View style={style.boxStyle} key={image.id}>
                             <TouchableOpacity onPress={correctPress}>
@@ -154,5 +188,16 @@ else {
     )
 }
 }
+
+if(pageState === "Done") {
+    return (
+        <View
+            style={style.pageStyle}
+        >
+            <Headline text={"2/3"}/>
+            <Headline text={"Done"}/>
+            <PainButtonTwo onPress={} text={"Log"} />
+        </View>
+      )
 
 export default xFindIconTask
