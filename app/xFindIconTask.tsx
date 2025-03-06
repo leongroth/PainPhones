@@ -69,7 +69,8 @@ const style= {
     gridStyle: {
         flexDirection: "row",
         flexWrap: "wrap",
-        height: "100%"
+        height: "100%",
+        backgroundColor: "#D9D9D9"
     },
     boxStyle: {
         width: "25%",
@@ -78,6 +79,20 @@ const style= {
         justifyContent: "center",
         alignItems: "center",
       },
+    imageIconStyle: {
+        width: 65,
+        height: 65,
+        borderRadius: 15,
+    },
+    iconTextStyle: {
+        textAlign: "center",
+    },
+    iconContainerStyle: {
+        //backgroundColor: "red",
+        flex: 1,
+        alignItems: "center",
+        paddingTop: 10
+    }
 }
 
 const correctPress = () => {
@@ -114,7 +129,11 @@ else {
                     return (
                         <View style={style.boxStyle} key={image.id}>
                             <TouchableOpacity onPress={correctPress}>
-                                <Image source={image.icon} />
+                                <View style={style.iconContainerStyle}>
+                                    <Image source={image.icon} style={style.imageIconStyle} />
+                                    <Text style={style.iconTextStyle}> {image.title} </Text>
+                                </View>
+                                
                             </TouchableOpacity>
                         </View>
                     )
@@ -122,7 +141,10 @@ else {
                     return (
                         <View style={style.boxStyle} key={image.id}>
                             <TouchableOpacity onPress={wrongPress}>
-                                <Image source={image.icon} />
+                                <View style={style.iconContainerStyle}>
+                                    <Image source={image.icon} style={style.imageIconStyle} />
+                                    <Text style={style.iconTextStyle}> {image.title} </Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     )
