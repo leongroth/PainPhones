@@ -9,7 +9,7 @@ import { icons } from '../assets/Icons';
 import PainButtonTwo from '../components/reusable/PainButtonTwo';
 import * as FileSystem from 'expo-file-system';
 import arrayShuffle from 'array-shuffle';
-import 
+
 
 
 
@@ -17,6 +17,9 @@ const xFindIconTask = () => {
 
   const [index, setIndex] = useState(Math.floor(Math.random() * 24));
   const [pageState, setPageState] = useState("Memory");
+
+  const [correctPresses, setCorrectPresses] = useState(0);
+  const [wrongPresses, setWrongPresses] = useState(0);
 
   // Timer funktion
 const timeLimit = 5
@@ -124,20 +127,51 @@ const style= {
     }
 }
 
+//lav csv fil her 
+const logIcon = async (iconIndex: number, isCorrect: boolean) => {
+    const selectedIcon = images[iconIndex];
+    const logIconID = { iconId: selectedIcon.id };
+  
+    const iconCsvData = [
+      ["IconID", "CorrectPress", "WrongPress"],
+      [logIconID.iconId, isCorrect ? 1 : 0, isCorrect ? 0 : 1],
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+  
+    const fileUri = FileSystem.documentDirectory + "participant_data.csv";
+  
+    // Check if file exists and read data from the file
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);
+    let existingData = "";
+    if (fileInfo.exists) {
+      existingData = await FileSystem.readAsStringAsync(fileUri);
+    }
+  
+    const updatedCsvData = existingData ? `${existingData}\n${iconCsvData}` : iconCsvData;
+  
+    await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+  };
 
 const correctPress = () => {
     console.log("Correct");
+    setCorrectPresses((prevCorrectPresses) => prevCorrectPresses + 1);
+    logIcon(index, true);
     const newIndex = Math.floor(Math.random() * 24);
     setPageState("Memory");
     setIndex(newIndex);
     const shuffledImages = arrayShuffle(imageArray);
     setImages(shuffledImages);
     setIconID(shuffledImages[newIndex].id);
-}
-const wrongPress = () => {
+  };
+  
+  const wrongPress = () => {
     console.log("Wrong");
-}
-
+    setWrongPresses((prevWrongPresses) => prevWrongPresses + 1);
+    logIcon(index, false);
+  };
 if (pageState === "Memory") {
     return (
       <View style= {style.pageStyle}>
@@ -188,7 +222,6 @@ if(pageState === "Task"){ {
     )
 }
 }
-
 if(pageState === "Done") {
     return (
         <View
@@ -196,8 +229,13 @@ if(pageState === "Done") {
         >
             <Headline text={"2/3"}/>
             <Headline text={"Done"}/>
-            <PainButtonTwo onPress={} text={"Log"} />
+            <PainButtonTwo onPress={logIcon} text={"Log"} />
         </View>
       )
+    
+    }
+}
+
+
 
 export default xFindIconTask
