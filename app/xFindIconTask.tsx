@@ -11,19 +11,12 @@ import * as FileSystem from 'expo-file-system';
 
 
 const xFindIconTask = () => {
-  const [active, setActive] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(Math.floor(Math.random() * 24));
   const [pageState, setPageState] = useState(true);
 
-  const generate = () => {
-    const newIndex = Math.floor(Math.random() * 24) + 1;
-    setIndex(newIndex);
-    setActive(true);
-    return newIndex; 
-  };
 
   const images = [
-    { icons: "", id: 0, title: "" },
+    { icon: icons.amazon, id: 0, title: "Amazon" },
     { icon: icons.candyCrush, id: 1, title: "Candy Crush" },
     { icon: icons.chatgpt, id: 2, title: "ChatGPT" },
     { icon: icons.clashOfClans, id: 3, title: "Clash of Clans" },
@@ -47,17 +40,14 @@ const xFindIconTask = () => {
     { icon: icons.whatsapp, id: 21, title: "WhatsApp" },
     { icon: icons.Temu, id: 22, title: "Temu" },
     { icon: icons.youtube, id: 23, title: "Youtube" },
-    { icon: icons.amazon, id: 24, title: "Amazon" }
   ];
 
   const rowHeight = 100 / 6
 const style= {
     pageStyle: {
         flex: 1,
-        allignItems: 'center',
-        width: "100%",
-        height: "100%",
-
+        alignItems: "center",
+        marginTop: 50,
 },
     iconStyle: {
         backgroundColor: '#FEFEFE',
@@ -82,21 +72,21 @@ const style= {
         height: "100%"
     },
     boxStyle: {
-        width: "25%", 
+        width: "25%",
         height: `${rowHeight}%`, 
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       },
 }
 
 const correctPress = () => {
     console.log("Correct");
     setPageState(true);
+    setIndex(Math.floor(Math.random() * 24))
 }
 const wrongPress = () => {
     console.log("Wrong");
-    setPageState(true);
 }
 
 if (pageState) {
@@ -112,8 +102,6 @@ if (pageState) {
       <PainButtonTwo text={"continue" } onPress={() => {
             setPageState(false);
       }} />
-      <PainButtonTwo text={"Generate new image"} onPress={generate} active={active} />
-
       </View>
       
     )
