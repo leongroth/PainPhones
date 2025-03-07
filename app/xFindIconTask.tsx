@@ -22,7 +22,7 @@ const xFindIconTask = () => {
   const [wrongPresses, setWrongPresses] = useState(0);
 
   // Timer funktion
-const timeLimit = 5
+const timeLimit = 30
 const [time, setTime] = useState(0)
 
   useEffect(() => {
@@ -40,6 +40,12 @@ const [time, setTime] = useState(0)
     return () => clearInterval(interval)
   }, [])
 
+  // Time loggin function
+  const date = new Date();
+  const startTimeMilli = date.getHours() * 3600000 + date.getMinutes() * 60000 + date.getSeconds() * 1000 + date.getMilliseconds();
+  const [memoTimeArray, setMemoTimeArray] = useState([startTimeMilli]);
+  const [taskTimeArray, setTaskTimeArray] = useState([]);
+  const [memoElapsedTime, setMemoElapsedTime] = useState(0);
 
   const imageArray = [
     { icon: icons.amazon, id: 0, title: "Amazon" },
@@ -70,6 +76,7 @@ const [time, setTime] = useState(0)
 
   const [images, setImages] = useState(arrayShuffle(imageArray));
   const [iconID, setIconID] = useState(images[index].id);
+  const [iconTitle, setIconTitle] = useState(images[index].title);
 
 
 
@@ -127,20 +134,31 @@ const style= {
     }
 }
 
-//lav csv fil her 
-const logIcon = async (iconIndex: number, isCorrect: boolean) => {
-    const selectedIcon = images[iconIndex];
-    const logIconID = { iconId: selectedIcon.id };
-  
-    const iconCsvData = [
-      ["IconID", "CorrectPress", "WrongPress"],
-      [logIconID.iconId, isCorrect ? 1 : 0, isCorrect ? 0 : 1],
-    ]
+const correctPress = async () => {
+    console.log("Correct");
+    setCorrectPresses((prevCorrectPresses) => prevCorrectPresses + 1);
+    const newIndex = Math.floor(Math.random() * 24);
+    setPageState("Memory");
+    setIndex(newIndex);
+    const shuffledImages = arrayShuffle(imageArray);
+    setImages(shuffledImages);
+    setIconID(shuffledImages[newIndex].id);
+    setIconTitle(shuffledImages[newIndex].title);
+
+    const newTime = new Date();
+    const newTimeMilli = newTime.getHours() * 3600000 + newTime.getMinutes() * 60000 + newTime.getSeconds() * 1000 + newTime.getMilliseconds();
+    setMemoTimeArray([...memoTimeArray, newTimeMilli]);
+
+    const taskElapsedTime = newTimeMilli - memoTimeArray[memoTimeArray.length - 1];
+
+    const TaskCsvData = [
+      ["MemoElapsedTime", "TaskElapsedTime", "WrongPresses", "iconTitle"],
+      [memoElapsedTime, taskElapsedTime, wrongPresses, iconTitle]]
       .map((row) => row.join(","))
       .join("\n");
   
     const fileUri = FileSystem.documentDirectory + "participant_data.csv";
-  
+
     // Check if file exists and read data from the file
     const fileInfo = await FileSystem.getInfoAsync(fileUri);
     let existingData = "";
@@ -148,30 +166,32 @@ const logIcon = async (iconIndex: number, isCorrect: boolean) => {
       existingData = await FileSystem.readAsStringAsync(fileUri);
     }
   
-    const updatedCsvData = existingData ? `${existingData}\n${iconCsvData}` : iconCsvData;
+    const updatedCsvData = existingData ? `${existingData}\n${TaskCsvData}` : TaskCsvData;
   
     await FileSystem.writeAsStringAsync(fileUri, updatedCsvData, {
       encoding: FileSystem.EncodingType.UTF8,
     });
-  };
 
-const correctPress = () => {
-    console.log("Correct");
-    setCorrectPresses((prevCorrectPresses) => prevCorrectPresses + 1);
-    logIcon(index, true);
-    const newIndex = Math.floor(Math.random() * 24);
-    setPageState("Memory");
-    setIndex(newIndex);
-    const shuffledImages = arrayShuffle(imageArray);
-    setImages(shuffledImages);
-    setIconID(shuffledImages[newIndex].id);
+    setWrongPresses(0);
   };
   
   const wrongPress = () => {
     console.log("Wrong");
     setWrongPresses((prevWrongPresses) => prevWrongPresses + 1);
-    logIcon(index, false);
   };
+
+  const handleContinue = async () => {
+    setPageState("Task");
+    const newTime = new Date();
+    const newTimeMilli = newTime.getHours() * 3600000 + newTime.getMinutes() * 60000 + newTime.getSeconds() * 1000 + newTime.getMilliseconds();
+    setTaskTimeArray([...taskTimeArray, newTimeMilli]);
+
+    const memoElapsedTime = newTimeMilli - memoTimeArray[memoTimeArray.length - 1];
+
+    setMemoElapsedTime(memoElapsedTime);
+  }
+
+
 if (pageState === "Memory") {
     return (
       <View style= {style.pageStyle}>
@@ -182,9 +202,7 @@ if (pageState === "Memory") {
             <Image source={images[index].icon} style={style.imageStyle} />
         </View>
         <Description text={images[index].title} />
-      <PainButtonTwo text={"continue" } onPress={() => {
-            setPageState("Task");
-      }} />
+      <PainButtonTwo text={"continue" } onPress={handleContinue} />
       </View>
       
     )
@@ -229,7 +247,7 @@ if(pageState === "Done") {
         >
             <Headline text={"2/3"}/>
             <Headline text={"Done"}/>
-            <PainButtonTwo onPress={logIcon} text={"Log"} />
+            <PainButton text={"continue" } href={"/"} />
         </View>
       )
     

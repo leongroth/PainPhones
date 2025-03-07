@@ -4,6 +4,10 @@ import PainButtonTwo from "../components/reusable/PainButtonTwo";
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from "@react-navigation/native";
 
+
+
+
+
 // Levenshtein distance algorithm
 const levenshteinDistance = (a, b) => {
   const an = a ? a.length : 0
@@ -32,8 +36,12 @@ const levenshteinDistance = (a, b) => {
   return matrix[an][bn];
 };
 
+
 const TextEntry = () => {
-  const timeLimit = 5
+  const timeStampStart = new Date()
+  const timeStampMilli = timeStampStart.getHours()*3600000+timeStampStart.getMinutes()*60000+timeStampStart.getSeconds()*1000+timeStampStart.getMilliseconds()
+  const [timeStampArray, setTimeStampArray] = useState([timeStampMilli])
+  const timeLimit = 30
   const [time, setTime] = useState(0)
   const navigation = useNavigation()
 
@@ -93,15 +101,18 @@ const TextEntry = () => {
     const trimmedText = text.trim()
     const mistakeCount = levenshteinDistance(trimmedInput, trimmedText)
     setMistakes(mistakeCount)
-
+    const newTimeStamp = new Date()
+    const minTimeStamp= (newTimeStamp.getHours()*3600000)+(newTimeStamp.getMinutes()*60000)+(newTimeStamp.getSeconds()*1000)+newTimeStamp.getMilliseconds()
+    const elapsedTime = minTimeStamp-timeStampArray[timeStampArray.length-1]
+    setTimeStampArray([...timeStampArray, minTimeStamp])
     const isCorrect = trimmedInput === trimmedText
     const result = isCorrect ? "Correct" : "Incorrect"
 
-    const logEntry = { mistakes: mistakeCount, result }
+    const logEntry = { mistakes: mistakeCount, result, elapsedTime }
 
     const csvData = [
-      ["Mistakes", "Result"],
-      [logEntry.mistakes, logEntry.result]
+      ["Mistakes", "Result", "ElapsedTime"],
+      [logEntry.mistakes, logEntry.result, logEntry.elapsedTime]
     ]
       .map(row => row.join(","))
       .join("\n");
