@@ -72,7 +72,7 @@ const [targetCoordinates, setTargetCoordinates] = useState({x: 0, y: 0})
 
   
   const targetCoord = useRef(null)
-
+//HELLO
   return (
     <TouchableOpacity style={{ height: "100%", width: "100%"}}  onPress={
       handlePress
