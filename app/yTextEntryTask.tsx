@@ -3,8 +3,7 @@ import { TextInput, View, Text, Alert } from "react-native";
 import PainButtonTwo from "../components/reusable/PainButtonTwo";
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from "@react-navigation/native";
-
-
+import { Input } from "react-native-elements";
 
 
 
@@ -41,7 +40,7 @@ const TextEntry = () => {
   const timeStampStart = new Date()
   const timeStampMilli = timeStampStart.getHours()*3600000+timeStampStart.getMinutes()*60000+timeStampStart.getSeconds()*1000+timeStampStart.getMilliseconds()
   const [timeStampArray, setTimeStampArray] = useState([timeStampMilli])
-  const timeLimit = 30
+  const timeLimit = 60
   const [time, setTime] = useState(0)
   const navigation = useNavigation()
 
@@ -65,7 +64,7 @@ const TextEntry = () => {
   const textInputRef = useRef(null)
 
   const easyText = [
-    "There is a cat on the big chair.",
+    {id:1, text:"There is a cat on the big chair."},
     "A dog runs in the yard with us.",
     "The sun is hot in the blue sky.",
     "A bird sits on the old fence.",
@@ -95,6 +94,9 @@ const TextEntry = () => {
   const [isEasyText, setIsEasyText] = useState(true)
   const [input, setInput] = useState("")
   const [mistakes, setMistakes] = useState(0)
+  const [charCount, setCharCount] = useState(0)
+  const [usedSentences, setUsedSentences] = useState([])
+  const [diff, setDiff] = useState("easy")
 
   const submit = async () => {
     const trimmedInput = input.trim()
@@ -107,12 +109,14 @@ const TextEntry = () => {
     setTimeStampArray([...timeStampArray, minTimeStamp])
     const isCorrect = trimmedInput === trimmedText
     const result = isCorrect ? "Correct" : "Incorrect"
+    setUsedSentences([...usedSentences, text])
 
-    const logEntry = { mistakes: mistakeCount, result, elapsedTime }
+
+    const logEntry = { mistakeCount, result, elapsedTime, charCount, text, diff}
 
     const csvData = [
-      ["Mistakes", "Result", "ElapsedTime"],
-      [logEntry.mistakes, logEntry.result, logEntry.elapsedTime]
+      ["Mistakes", "Result", "ElapsedTime", "characterInputs", "Text", "Difficulty"],
+      [logEntry.mistakeCount, logEntry.result, logEntry.elapsedTime, logEntry.charCount, logEntry.text, logEntry.diff]
     ]
       .map(row => row.join(","))
       .join("\n");
@@ -133,24 +137,35 @@ const TextEntry = () => {
       encoding: FileSystem.EncodingType.UTF8,
     });
 
+    let newText;
     if (isEasyText) {
-      setOrder(hardText)
-      setText(hardText[Math.floor(Math.random() * hardText.length)])
+      setDiff("hard")
+      setOrder(hardText);
+      do {
+        newText = hardText[Math.floor(Math.random() * hardText.length)];
+      } while (usedSentences.includes(newText));
+      setText(newText);
     } else {
-      setOrder(easyText)
-      setText(easyText[Math.floor(Math.random() * easyText.length)])
+      setDiff("easy")
+      setOrder(easyText);
+      do {
+        newText = easyText[Math.floor(Math.random() * easyText.length)];
+      } while (usedSentences.includes(newText));
+      setText(newText);
     }
 
     setIsEasyText(!isEasyText)
     textInputRef.current.clear()
     setInput("")
-    Alert.alert(result)
+    //Alert.alert(result)
   };
+
+
 
   return (
     <View style={{ padding: 20 }}>
       <Text style={{ fontSize: 20 }}>{text} </Text>
-      <TextInput
+      <Input
         ref={textInputRef}
         style={{
           marginTop: 150,
@@ -166,8 +181,12 @@ const TextEntry = () => {
         multiline
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onChangeText={setInput}
-        value={input}
+        onChange={ (event)=> {
+          setInput(event.nativeEvent.text)
+          setCharCount(charCount+1)
+        }
+      }
+
       />
       <Text style={{ marginTop: 10 }}>Mistakes: {mistakes}</Text>
       <View style={{ alignItems: 'center', marginTop: 20 }}>
