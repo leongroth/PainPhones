@@ -18,9 +18,10 @@ const Target = () => {
         backgroundColor: "blue",
     }
   return (
-    <View style={OuterTarget} onLayout={({nativeEvent}) => {
-      console.log ("Targetc", Math.round(nativeEvent.layout.width*3), Math.round(nativeEvent.layout.height*3))
-    }}>
+    <View style={OuterTarget} 
+    //onLayout={({nativeEvent}) => {console.log ("Targetc", Math.round(nativeEvent.layout.width*3), Math.round(nativeEvent.layout.height*3))}}
+    >
+
         <View style={InnerTarget}></View>
     </View>
   )

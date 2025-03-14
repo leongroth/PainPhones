@@ -86,7 +86,6 @@ const [targetCoordinates, setTargetCoordinates] = useState({x: 0, y: 0})
                     const targetX= Math.round((nativeEvent.layout.x + nativeEvent.layout.width/2)*3)
                     const targetY= Math.round((nativeEvent.layout.y + nativeEvent.layout.height/2)*3)
                     setTargetCoordinates({x: targetX, y: targetY})
-                    console.log(targetX, targetY)
                   }
                   }> <Target/> </View>
                 )
