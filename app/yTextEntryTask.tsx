@@ -64,29 +64,29 @@ const TextEntry = () => {
   const textInputRef = useRef(null)
 
   const easyText = [
-    {id:1, text:"There is a cat on the big chair."},
-    "A dog runs in the yard with us.",
-    "The sun is hot in the blue sky.",
-    "A bird sits on the old fence.",
-    "There is a bug on my small hand.",
-    "The kid plays in the cold snow.",
-    "A fish swims in the deep pond.",
-    "There is a bee in the red rose.",
-    "The bell rings in the quiet hall.",
-    "A frog jumps in the wet grass.",
+    {id: "E1", text:"There is a cat on the big chair."},
+    {id: "E2", text:"A dog runs in the yard with us."},
+    {id: "E3", text:"The sun is hot in the blue sky."},
+    {id: "E4", text:"A bird sits on the old fence."},
+    {id: "E5", text: "There is a bug on my small hand."},
+    {id: "E6", text: "The kid plays in the cold snow."},
+    {id: "E7", text: "A fish swims in the deep pond."},
+    {id: "E8", text: "There is a bee in the red rose."},
+    {id: "E9", text: "The bell rings in the quiet hall."},
+    {id: "E10", text: "A frog jumps in the wet grass."},
   ];
 
   const hardText = [
-    "Let not the winds of fate erase my name. My soul shall in thy heart forever stay.",
-    "Though time may steal the youth from out my face, my love within thy gaze shall never pale.",
-    "Yet shall the moonlight grace the silent shore, though waves may rise and crash against the stone.",
-    "Speak now thy truth ere silence binds thy tongue, for words once lost shall never more be found.",
-    "Dost thou still dream when night begins to fall? Or doth the dawn unmake what darkness spun?",
-    "Fret not, for even winter turns to spring, and death itself shall bow to love’s embrace.",
-    "Though stars may dim and skies be torn with storm, my vow remains unshaken in its light.",
-    "Time bends its will to neither king nor slave, yet love shall carve its name upon the stone.",
-    "Though night doth creep upon the waning day, the fire in my heart shall not grow cold.",
-    "The fickle hand of fate may shift the tide, yet still my heart shall hold thee ever near.",
+    { id: "H1", text: "Let not the winds of fate erase my name. My soul shall in thy heart forever stay." },
+    { id: "H2", text: "Though time may steal the youth from out my face, my love within thy gaze shall never pale." },
+    { id: "H3", text: "Yet shall the moonlight grace the silent shore, though waves may rise and crash against the stone." },
+    { id: "H4", text: "Speak now thy truth ere silence binds thy tongue, for words once lost shall never more be found." },
+    { id: "H5", text: "Dost thou still dream when night begins to fall? Or doth the dawn unmake what darkness spun?" },
+    { id: "H6", text: "Fret not, for even winter turns to spring, and death itself shall bow to loves embrace." },
+    { id: "H7", text: "Though stars may dim and skies be torn with storm, my vow remains unshaken in its light." },
+    { id: "H8", text: "Time bends its will to neither king nor slave, yet love shall carve its name upon the stone." },
+    { id: "H9", text: "Though night doth creep upon the waning day, the fire in my heart shall not grow cold." },
+    { id: "H10", text: "The fickle hand of fate may shift the tide, yet still my heart shall hold thee ever near." },
   ];
 
   const [order, setOrder] = useState(easyText);
@@ -100,7 +100,7 @@ const TextEntry = () => {
 
   const submit = async () => {
     const trimmedInput = input.trim()
-    const trimmedText = text.trim()
+    const trimmedText = text.text.trim()
     const mistakeCount = levenshteinDistance(trimmedInput, trimmedText)
     setMistakes(mistakeCount)
     const newTimeStamp = new Date()
@@ -111,12 +111,12 @@ const TextEntry = () => {
     const result = isCorrect ? "Correct" : "Incorrect"
     setUsedSentences([...usedSentences, text])
 
-
-    const logEntry = { mistakeCount, result, elapsedTime, charCount, text, diff}
+    const id = text.id
+    const logEntry = { mistakeCount, result, elapsedTime, charCount, id}
 
     const csvData = [
-      ["Mistakes", "Result", "ElapsedTime", "characterInputs", "Text", "Difficulty"],
-      [logEntry.mistakeCount, logEntry.result, logEntry.elapsedTime, logEntry.charCount, logEntry.text, logEntry.diff]
+      ["Mistakes", "Result", "ElapsedTime", "characterInputs", "TextID", "Difficulty"],
+      [logEntry.mistakeCount, logEntry.result, logEntry.elapsedTime, logEntry.charCount, logEntry.id]
     ]
       .map(row => row.join(","))
       .join("\n");
@@ -164,7 +164,7 @@ const TextEntry = () => {
 
   return (
     <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: 20 }}>{text} </Text>
+      <Text style={{ fontSize: 20 }}>{text.text} </Text>
       <Input
         ref={textInputRef}
         style={{
