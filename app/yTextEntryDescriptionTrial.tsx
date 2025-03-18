@@ -13,7 +13,6 @@ export default function yTextEntryDescriptionTrial() {
       <Headline text={"Text-Entry"}/>
     <Text style={{ fontSize: 20 }}>A text is shown to you and you have to replicate the text and submit it.  </Text>
     <PainButton href={"/yTextEntryTaskTrial"} text={"continue"}/>
-    <PainButton href={"/yTextEntryDoneTrial"} text={"task done"} />
   </View>
   )
 }

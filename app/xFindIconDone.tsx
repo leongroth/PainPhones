@@ -16,7 +16,7 @@ export default function xFindIconDone  ()  {
     >
         <Headline text={"2/3"}/>
         <Headline text={"Done"}/>
-        <PainButton href={"/"} text={"Continue"} />
+        <PainButton href={"IndexTest"} text={"Continue"} />
     </View>
   )
 }

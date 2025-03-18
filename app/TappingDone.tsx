@@ -13,7 +13,7 @@ const TappingDone = () => {
     >
         <Headline text={"1/3"}/>
         <Headline text={"Done"}/>
-        <PainButton href={"/"} text={"Continue"} />
+        <PainButton href={"IndexTest"} text={"Continue"} />
     </View>
   )
 }

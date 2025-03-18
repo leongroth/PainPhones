@@ -247,7 +247,7 @@ if(pageState === "Done") {
         >
             <Headline text={"2/3"}/>
             <Headline text={"Done"}/>
-            <PainButton text={"continue" } href={"/"} />
+            <PainButton text={"continue" } href={"IndexTest"} />
         </View>
       )
     

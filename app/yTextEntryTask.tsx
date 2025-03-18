@@ -115,7 +115,7 @@ const TextEntry = () => {
     const logEntry = { mistakeCount, result, elapsedTime, charCount, id}
 
     const csvData = [
-      ["Mistakes", "Result", "ElapsedTime", "characterInputs", "TextID", "Difficulty"],
+      ["Mistakes", "Result", "ElapsedTime", "characterInputs", "TextID"],
       [logEntry.mistakeCount, logEntry.result, logEntry.elapsedTime, logEntry.charCount, logEntry.id]
     ]
       .map(row => row.join(","))

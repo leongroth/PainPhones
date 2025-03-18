@@ -28,7 +28,7 @@ const TappingTasks = () => {
       setTime((prevTime) => {
         if (prevTime >= 90) {
           clearInterval(interval);
-          navigation.navigate("TappingDone"); // Replace 'NextPage' with the name of your next screen
+          navigation.navigate("TappingDone"); 
           return prevTime;
         }
         return prevTime + 1;
