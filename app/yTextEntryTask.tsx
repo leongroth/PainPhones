@@ -40,7 +40,7 @@ const TextEntry = () => {
   const timeStampStart = new Date()
   const timeStampMilli = timeStampStart.getHours()*3600000+timeStampStart.getMinutes()*60000+timeStampStart.getSeconds()*1000+timeStampStart.getMilliseconds()
   const [timeStampArray, setTimeStampArray] = useState([timeStampMilli])
-  const timeLimit = 60
+  const timeLimit = 90
   const [time, setTime] = useState(0)
   const navigation = useNavigation()
 

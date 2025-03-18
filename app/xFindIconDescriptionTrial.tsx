@@ -15,7 +15,6 @@ export default function FindIconTrialDescription() {
       <Headline text={"Find Icon"}/>
     <Text style={{ fontSize: 20 }}>A icon is shown to you and you have to find it with other icons in the mix </Text>
     <PainButton href={"/xFindIconTaskTrial"} text={"continue"}/>
-    <PainButton href={"/xFindIconDoneTrial"} text={"task done"} />
   </View>
   )
 }

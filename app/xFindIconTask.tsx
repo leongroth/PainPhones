@@ -22,7 +22,7 @@ const xFindIconTask = () => {
   const [wrongPresses, setWrongPresses] = useState(0);
 
   // Timer funktion
-const timeLimit = 30
+const timeLimit = 90
 const [time, setTime] = useState(0)
 
   useEffect(() => {

@@ -22,13 +22,8 @@ export default function Index() {
         padding: 20,
       }}
     >
-      <Headline text={"Hejsa"} />
-      <PainButton href={"/ParticipantInfo"} text={"Part-Info"} />
-      <PainButton href={"/TappingDescription"} text={"TappingTask"} />
-      <PainButton href={"/xFindIconDescription"} text={"FindIcon"} />
-      <PainButton href={"/yTextEntryDescription"} text={"TextEntry"} />
-      <PainButton href={"/Test"} text={"test"} />
-      <PainButtonTwo onPress={downloadCSV} text="CSVFile" />
+      <PainButton href="/IndexTest" text="Test" />
+      <PainButton href="/FrontPageTrial" text="Trial" />
     </View>
   );
 }
