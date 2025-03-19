@@ -40,7 +40,7 @@ const TextEntry = () => {
     timeStampStart.getSeconds() * 1000 +
     timeStampStart.getMilliseconds();
   const [timeStampArray, setTimeStampArray] = useState([timeStampMilli]);
-  const timeLimit = 60;
+  const timeLimit = 1000;
   const [time, setTime] = useState(0);
   const navigation = useNavigation();
 
@@ -49,7 +49,7 @@ const TextEntry = () => {
       setTime((prevTime) => {
         if (prevTime >= timeLimit) {
           clearInterval(interval);
-          navigation.navigate("yTextEntryTrialDone"); // Replace 'NextPage' with the name of your next screen
+          navigation.navigate("yTextEntryDoneTrial"); // Replace 'NextPage' with the name of your next screen
           return prevTime;
         }
         return prevTime + 1;
@@ -195,7 +195,6 @@ const TextEntry = () => {
           setCharCount(charCount + 1);
         }}
       />
-      <Text style={{ marginTop: 10 }}>Mistakes: {mistakes}</Text>
       <View style={{ alignItems: "center", marginTop: 20 }}>
         <PainButtonTwo onPress={submit} text={"Submit"} />
       </View>

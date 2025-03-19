@@ -188,7 +188,6 @@ const TextEntry = () => {
       }
 
       />
-      <Text style={{ marginTop: 10 }}>Mistakes: {mistakes}</Text>
       <View style={{ alignItems: 'center', marginTop: 20 }}>
         <PainButtonTwo onPress={submit} text={"Submit"} />
       </View>

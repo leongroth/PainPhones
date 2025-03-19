@@ -16,7 +16,7 @@ const xFindIconTaskTrial = () => {
   const [wrongPresses, setWrongPresses] = useState(0);
 
   // Timer function
-  const timeLimit = 30;
+  const timeLimit = 1000;
   const [time, setTime] = useState(0);
 
   useEffect(() => {
