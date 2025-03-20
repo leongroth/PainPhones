@@ -21,7 +21,6 @@ const IndexTest = () => {
         padding: 20,
       }}
     >
-      <Headline text={"Hejsa"} />
       <PainButton href={"/ParticipantInfo"} text={"Part-Info"} />
       <PainButton href={"/TappingDescription"} text={"TappingTask"} />
       <PainButton href={"/xFindIconDescription"} text={"FindIcon"} />

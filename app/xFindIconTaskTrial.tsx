@@ -15,24 +15,7 @@ const xFindIconTaskTrial = () => {
   const [correctPresses, setCorrectPresses] = useState(0);
   const [wrongPresses, setWrongPresses] = useState(0);
 
-  // Timer function
-  const timeLimit = 1000;
-  const [time, setTime] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime >= timeLimit) {
-          clearInterval(interval);
-          setPageState("Done");
-          return prevTime;
-        }
-        return prevTime + 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const imageArray = [
     { icon: icons.amazon, id: 0, title: "Amazon" },
@@ -183,15 +166,6 @@ const xFindIconTaskTrial = () => {
     );
   }
 
-  if (pageState === "Done") {
-    return (
-      <View style={style.pageStyle}>
-        <Headline text={"2/3"} />
-        <Headline text={"Done"} />
-        <PainButton text={"continue"} href={"/FrontPageTrial"} />
-      </View>
-    );
-  }
 };
 
 export default xFindIconTaskTrial;

@@ -40,24 +40,9 @@ const TextEntry = () => {
     timeStampStart.getSeconds() * 1000 +
     timeStampStart.getMilliseconds();
   const [timeStampArray, setTimeStampArray] = useState([timeStampMilli]);
-  const timeLimit = 1000;
-  const [time, setTime] = useState(0);
-  const navigation = useNavigation();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime >= timeLimit) {
-          clearInterval(interval);
-          navigation.navigate("yTextEntryDoneTrial"); // Replace 'NextPage' with the name of your next screen
-          return prevTime;
-        }
-        return prevTime + 1;
-      });
-    }, 1000);
 
-    return () => clearInterval(interval);
-  }, [navigation]);
+
 
   const [isFocused, setIsFocused] = useState(false);
   const [height, setHeight] = useState(50);
@@ -168,7 +153,6 @@ const TextEntry = () => {
     setIsEasyText(!isEasyText);
     textInputRef.current.clear();
     setInput("");
-    //Alert.alert(result)
   };
 
   return (

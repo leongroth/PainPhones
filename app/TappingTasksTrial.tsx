@@ -7,26 +7,10 @@ import { useNavigation } from "@react-navigation/native"
 LogBox.ignoreAllLogs()
 
 const TappingTasks = () => {
-  //Timer
-const [time, setTime] = useState(0)
-const navigation = useNavigation()
 const [targetCoordinates, setTargetCoordinates] = useState({x: 0, y: 0})
-const timeLimit= 1000
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(prevTime => {
-        if (prevTime >= timeLimit) {
-          clearInterval(interval)
-          navigation.navigate('TappingDoneTrial') // Replace 'NextPage' with the name of your next screen
-          return prevTime
-        }
-        return prevTime + 1
-      })
-    }, 1000)
 
-    return () => clearInterval(interval)
-  }, [navigation])
+
 
   // Random number
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 24))
