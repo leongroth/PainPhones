@@ -168,7 +168,7 @@ const TextEntry = () => {
       <Input
         ref={textInputRef}
         style={{
-          marginTop: 150,
+          marginTop: 100,
           height: height,
           minHeight: 100,
           borderWidth: 2,
@@ -188,7 +188,7 @@ const TextEntry = () => {
       }
 
       />
-      <View style={{ alignItems: 'center', marginTop: 20 }}>
+      <View style={{ alignItems: 'center'}}>
         <PainButtonTwo onPress={submit} text={"Submit"} />
       </View>
     </View>
