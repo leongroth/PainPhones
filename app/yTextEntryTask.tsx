@@ -68,7 +68,7 @@ const TextEntry = () => {
     {id: "E2", text:"A dog runs in the yard with us."},
     {id: "E3", text:"The sun is hot in the bluest sky."},
     {id: "E4", text:"A bird sitting on the oldest fence."},
-    {id: "E5", text: "There is a insect on my small hand."},
+    {id: "E5", text: "There is an insect on my small hand."},
     {id: "E6", text: "The kid is playing in the cold snow."},
     {id: "E7", text: "I want to do a lot of shopping."},
     {id: "E8", text: "The pupil is bigger in the night."},
